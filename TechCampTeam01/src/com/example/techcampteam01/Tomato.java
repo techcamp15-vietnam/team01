@@ -8,12 +8,18 @@ import android.graphics.Paint;
 import android.view.View;
 
 public class Tomato {
-
-	private static final int MAX_PICTURE_SIZE = 180;
+/**
+ * Tomato object
+ * @author ミン・ドゥック 
+ * @author ティエプ
+ */
+	private static final int MAX_PICTURE_SIZE = 180; //max size of tomato's picture will be loaded
 
 	private int currentTomtatoSize = MAX_PICTURE_SIZE;
+	// tomato picture's top-left point
 	private float x;
 	private float y;
+	//parent container
 	private View parent;
 	private boolean splashDone = false;
 
@@ -21,9 +27,11 @@ public class Tomato {
 	Paint bPaint;
 	Paint lPaint;
 
-	int deltaX;
-	int deltaY;
-	private Bitmap bitmap;
+	// moving speed
+	int velosityX;
+	int velosityY;
+	
+	private Bitmap scaledBitmap;
 
 	private Bitmap rawbitmap;
 
@@ -40,16 +48,20 @@ public class Tomato {
 		bPaint = new Paint();
 		lPaint = new Paint();
 		lPaint = new Paint(Color.RED);
-		deltaX = parent.getWidth() / 70;
-		deltaY = parent.getHeight() / 70;
+		velosityX = parent.getWidth() / 70;
+		velosityY = parent.getHeight() / 70;
 
 		rawbitmap = BitmapFactory.decodeResource(parent.getResources(),
 				R.drawable.tomato);
-		bitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
+		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
 
 	}
 
+	/**
+	 * Draw tomato animation onto the screen
+	 * @param canvas canvas from parent container
+	 */
 	public void draw(Canvas canvas) {
 
 		if (x < parent.getWidth() / 2 - currentTomtatoSize / 2) {
@@ -62,13 +74,13 @@ public class Tomato {
 			splashDone = true;
 		}
 
-		canvas.drawBitmap(bitmap, x, y, bPaint);
+		canvas.drawBitmap(scaledBitmap, x, y, bPaint);
 
-		x -= deltaX;
-		y -= deltaY;
+		x -= velosityX;
+		y -= velosityY;
 
 		currentTomtatoSize -= 2;
-		bitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
+		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
 
 	}

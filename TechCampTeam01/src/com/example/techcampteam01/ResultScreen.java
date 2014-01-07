@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Display result screen of game.
  * 
- * @author TiepDV
+ * @author ティエプ
  * 
  */
 

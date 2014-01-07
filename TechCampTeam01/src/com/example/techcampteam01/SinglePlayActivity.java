@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -17,12 +16,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SinglePlayActivity extends Activity {
 
+	/**
+	 * @author ミン・ドゥック
+	 */
 	private Preview mPreview;
 	private Camera mCamera;
 	private int numberOfCameras;
@@ -56,25 +57,20 @@ public class SinglePlayActivity extends Activity {
 			}
 		}
 
-		// TomatoAnimation tomato = new TomatoAnimation(this);
-		//
-		// LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-		// LayoutParams.MATCH_PARENT);
-		// addContentView(tomato, params);
-
 		tomatoFire = (ImageView) findViewById(R.id.tomato_fire);
 		tomatoFire.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-
 				fire();
-
 			}
 		});
 		initButtons();
 	}
 
+	/**
+	 * Fire tomato event. Calculate the coordinate, target hit or missed
+	 */
 	public void fire() {
 
 		mPreview.assignTomatoToPreview();
@@ -83,9 +79,6 @@ public class SinglePlayActivity extends Activity {
 		int centerX = mPreview.getWidth() / 2;
 		int centerY = mPreview.getHeight() / 2;
 
-		// Rectangle targetRect = new Rectangle(centerX - width / 2, centerY -
-		// height / 2,
-		// width, height);
 		Preview.prepareMatrix(matrix, 90, mPreview.getWidth(),
 				mPreview.getHeight());
 		for (int i = 0; i < faces.size(); i++)
@@ -104,7 +97,6 @@ public class SinglePlayActivity extends Activity {
 			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
 				Toast.makeText(SinglePlayActivity.this, "Target Hit",
 						Toast.LENGTH_SHORT).show();
-
 			}
 
 			else {
@@ -113,11 +105,6 @@ public class SinglePlayActivity extends Activity {
 			}
 		}
 	}
-
-	// public Tomato getTomato() {
-	//
-	// return this.tomato;
-	// }
 
 	private void initButtons() {
 

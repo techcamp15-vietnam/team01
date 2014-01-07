@@ -33,7 +33,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		FaceDetectionListener {
 	private Camera mCamera;
 	private SurfaceHolder mHolder;
-	private int count = 100;
 	// Size mPreviewSize;
 	List<Size> mSupportedPreviewSizes;
 	private final String TAG = "PreviewCamera";
@@ -49,6 +48,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	Tomato flyingTomato;
 
+	/**
+	 * Camera Preview Constructor
+	 * 
+	 * @author ティエプ
+	 * @param context
+	 *            the parent context
+	 */
 	public Preview(SinglePlayActivity context) {
 		super(context);
 		mHolder = getHolder();
@@ -69,6 +75,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
+	/**
+	 * set faces listed from the camera to Preview's Class attribute
+	 * 
+	 * @param faces
+	 *            The list of detected faces returned from camera
+	 */
 	public void setFaces(List<Face> faces) {
 
 		this.faces = faces;
@@ -80,33 +92,21 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		return this.faces;
 	}
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		final int width = resolveSize(getSuggestedMinimumWidth(),
-				widthMeasureSpec);
-		final int height = resolveSize(getSuggestedMinimumHeight(),
-				heightMeasureSpec);
-		setMeasuredDimension(width, height);
-
-		if (mSupportedPreviewSizes != null) {
-			// mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes,
-			// width,
-			// height);
-		}
-
-	}
-
+	/**
+	 * Put image from the camera to device's screen for previewing. Called
+	 * immediately after any structural changes (format or size) have been made
+	 * to the surface. Start faces detection from here
+	 * 
+	 * @author ティエプ
+	 * 
+	 */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 		Camera.Parameters parameters = mCamera.getParameters();
-		// parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
 		requestLayout();
-
 		mCamera.setParameters(parameters);
 		mCamera.startPreview();
-
 		startDetection();
 	}
 
@@ -130,6 +130,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		}
 	}
 
+	/**
+	 * Set camera for processing. In this application we use facing back camera
+	 * only, no switching camera
+	 * 
+	 * @param camera
+	 */
 	public void setCamera(Camera camera) {
 		mCamera = camera;
 		if (mCamera != null) {
@@ -137,7 +143,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 			mSupportedPreviewSizes = mCamera.getParameters()
 					.getSupportedPreviewSizes();
 			requestLayout();
-
 		}
 
 	}
@@ -184,6 +189,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
+	/**
+	 * Create file's name for captured picture. File's name is depend on taken
+	 * time.
+	 * 
+	 * @return file's name
+	 */
 	private String createFileName() {
 
 		String state = Environment.getExternalStorageState();
@@ -195,6 +206,11 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		return "";
 	}
 
+	/**
+	 * Start detecting faces
+	 * 
+	 * @author ティエプ
+	 */
 	@SuppressLint("NewApi")
 	public void startDetection() {
 
@@ -209,6 +225,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
+	/**
+	 * Draw detected faces's rectangle area onto the screen. Call drawTomato
+	 * method.
+	 * 
+	 * @author ティエプ
+	 */
 	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -257,26 +279,35 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
+	/**
+	 * Draw the flying tomato
+	 * 
+	 * @param canvas
+	 *            Canvas from surface view 's onDraw method
+	 * @author ティエプ
+	 */
 	private void drawTomato(Canvas canvas) {
 		if ((flyingTomato != null) && !flyingTomato.getDoneSplash())
 			flyingTomato.draw(canvas);
 		invalidate();
-
-		// Bitmap rawbitmap = BitmapFactory.decodeResource(getResources(),
-		// R.drawable.tomato);
-		//
-		// Bitmap bitmap = Bitmap.createScaledBitmap(rawbitmap, 180, 180, true);
-		//
-		// canvas.drawBitmap(bitmap, 0, 0, painter);
-
 	}
 
+	/**
+	 * Get a new Tomato when fire button called
+	 * 
+	 * @author ティエプ
+	 */
 	public void assignTomatoToPreview() {
 
 		flyingTomato = new Tomato(this);
 		invalidate();
 	}
 
+	/**
+	 * Draw the aim point at the middle of device's screen.
+	 * 
+	 * @author ティエプ
+	 */
 	private void drawTarget(Canvas canvas) {
 
 		int centerX = getWidth() / 2;
@@ -293,6 +324,15 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
+	/**
+	 * Prepare a matrix to translate camera coordinate to screen coordinate
+	 * 
+	 * @author developer.android.com ^^
+	 * @param matrix
+	 * @param displayOrientation
+	 * @param viewWidth
+	 * @param viewHeight
+	 */
 	public static void prepareMatrix(Matrix matrix, int displayOrientation,
 			int viewWidth, int viewHeight) {
 
@@ -307,7 +347,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		// UI coordinates range from (0, 0) to (width, height).
 		matrix.postScale(viewWidth / 2000f, viewHeight / 2000f);
 		matrix.postTranslate(viewWidth / 2f, viewHeight / 2f);
-
 	}
 
 	@Override

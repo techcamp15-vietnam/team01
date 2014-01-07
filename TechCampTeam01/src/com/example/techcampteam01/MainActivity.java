@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 
 	
 	/**
-	 * call  single activity
+	 * call  single player mode activity
 	 * @param null
 	 * @author 1-A トゥン
 	 */

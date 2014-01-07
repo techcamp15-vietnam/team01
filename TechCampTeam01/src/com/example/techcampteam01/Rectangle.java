@@ -2,6 +2,12 @@ package com.example.techcampteam01;
 
 import android.graphics.Point;
 
+/**
+ * 
+ * 
+ * @author ティエプ
+ * 
+ */
 public class Rectangle {
 
 	private int x, y;
