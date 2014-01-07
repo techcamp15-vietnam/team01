@@ -72,6 +72,11 @@ public class TomatoAnimation extends View {
 			canvas.drawBitmap(splash, x, y, tPaint);
 		}
 	}
+	
+	
+	/**
+	 * 
+	 */
 
 	protected void moveTheTomato() {
 		x = x + Vx;
