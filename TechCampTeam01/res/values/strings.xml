@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TechCampTeam01</string>
+    <string name="app_name">Shoot Your Boss</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="share">Share</string>
+    <string name="your_name">Your Name</string>
+    <string name="default_name">TDT</string>
 </resources>
