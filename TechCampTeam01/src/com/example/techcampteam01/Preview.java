@@ -261,6 +261,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 		if (flyingTomato != null)
 			flyingTomato.draw(canvas);
+		invalidate();
 
 		// Bitmap rawbitmap = BitmapFactory.decodeResource(getResources(),
 		// R.drawable.tomato);
@@ -274,6 +275,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	public void assignTomatoToPreview() {
 
 		flyingTomato = new Tomato(this);
+		invalidate();
 
 	}
 
