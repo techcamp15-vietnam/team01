@@ -8,7 +8,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -47,7 +48,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	Rectangle targetRect;
 
-	public Preview(Context context) {
+	Tomato flyingTomato;
+
+	public Preview(SinglePlayActivity context) {
 		super(context);
 		mHolder = getHolder();
 		mHolder.addCallback(this);
@@ -64,6 +67,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		painter.setStrokeWidth(3);
 
 		handler = new Handler();
+
 	}
 
 	public void setFaces(List<Face> faces) {
@@ -248,6 +252,28 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 			}
 		}
+
+		drawTomato(canvas);
+
+	}
+
+	private void drawTomato(Canvas canvas) {
+
+		if (flyingTomato != null)
+			flyingTomato.draw(canvas);
+
+		// Bitmap rawbitmap = BitmapFactory.decodeResource(getResources(),
+		// R.drawable.tomato);
+		//
+		// Bitmap bitmap = Bitmap.createScaledBitmap(rawbitmap, 180, 180, true);
+		//
+		// canvas.drawBitmap(bitmap, 0, 0, painter);
+
+	}
+
+	public void assignTomatoToPreview() {
+
+		flyingTomato = new Tomato(this);
 
 	}
 

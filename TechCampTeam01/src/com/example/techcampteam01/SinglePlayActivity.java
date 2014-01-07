@@ -8,9 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ZoomControls;
+import android.widget.ImageView;
 
 @SuppressLint("NewApi")
 public class SinglePlayActivity extends Activity {
@@ -22,6 +21,8 @@ public class SinglePlayActivity extends Activity {
 
 	// The first rear facing camera
 	int defaultCameraId;
+
+	ImageView tomatoFire;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,35 @@ public class SinglePlayActivity extends Activity {
 			}
 		}
 
+		// TomatoAnimation tomato = new TomatoAnimation(this);
+		//
+		// LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+		// LayoutParams.MATCH_PARENT);
+		// addContentView(tomato, params);
+
+		tomatoFire = (ImageView) findViewById(R.id.tomato_fire);
+		tomatoFire.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				fire();
+
+			}
+		});
 		initButtons();
 	}
+
+	public void fire() {
+
+		mPreview.assignTomatoToPreview();
+
+	}
+
+	// public Tomato getTomato() {
+	//
+	// return this.tomato;
+	// }
 
 	private void initButtons() {
 

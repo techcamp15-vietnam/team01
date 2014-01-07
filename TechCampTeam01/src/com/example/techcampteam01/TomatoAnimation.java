@@ -14,27 +14,33 @@ public class TomatoAnimation extends View {
 	private static final int TOMATO_FLYING_TIME = 1000;
 	private static final int DELAY_TIME = 50;
 	private static final int MAX_PICTURE_SIZE = 180;
+
 	private int currentTomtatoSize = MAX_PICTURE_SIZE;
 	public float x = 0;
 	public float y = 0;
 	private float Vx;
 	private float Vy;
 	private int count = TOMATO_FLYING_TIME;
-	TimeCountThread timeCount = new TimeCountThread();
+
+	// TimeCountThread timeCount = new TimeCountThread();
+
+	Paint tPaint;
+	Paint bPaint;
 
 	public TomatoAnimation(Context context) {
 		super(context);
-		timeCount.start();
 	}
 
 	public TomatoAnimation(Context context, AttributeSet attr) {
 		super(context, attr);
-		timeCount.start();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (count == TOMATO_FLYING_TIME - DELAY_TIME) {
+
+		// if (count == TOMATO_FLYING_TIME - DELAY_TIME)
+
+		{
 			float velosRatio = (float) (getHeight() / 2) / (getWidth() / 2);
 			x = getWidth() - MAX_PICTURE_SIZE;
 			y = getHeight() - MAX_PICTURE_SIZE;
@@ -42,7 +48,9 @@ public class TomatoAnimation extends View {
 					Toast.LENGTH_SHORT).show();
 			Vx = -(float) (getWidth() / 100f);
 			Vy = -(float) (getHeight() / 90f);
-			Toast.makeText(getContext(), "Vy:" + Vy, Toast.LENGTH_SHORT).show();
+
+			// Toast.makeText(getContext(), "Vy:" + Vy,
+			// Toast.LENGTH_SHORT).show();
 		}
 		if (y >= getHeight() / 2 - currentTomtatoSize / 2) {
 			Paint tPaint = new Paint();
@@ -71,9 +79,9 @@ public class TomatoAnimation extends View {
 					currentTomtatoSize, currentTomtatoSize, true);
 			canvas.drawBitmap(splash, x, y, tPaint);
 		}
+
 	}
-	
-	
+
 	/**
 	 * 
 	 */
@@ -84,17 +92,4 @@ public class TomatoAnimation extends View {
 		invalidate();
 	}
 
-	private class TimeCountThread extends Thread {
-		public void run() {
-			while (count > 0) {
-				count = count - DELAY_TIME;
-				try {
-					sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 }
