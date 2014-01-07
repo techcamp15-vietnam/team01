@@ -8,8 +8,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -35,14 +33,15 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		FaceDetectionListener {
 	private Camera mCamera;
 	private SurfaceHolder mHolder;
+	private int count = 100;
 	// Size mPreviewSize;
 	List<Size> mSupportedPreviewSizes;
 	private final String TAG = "PreviewCamera";
 
-	List<Face> faces;
-	Paint painter;
-	Matrix matrix;
-	RectF rect;
+	private List<Face> faces;
+	private Paint painter;
+	private Matrix matrix;
+	private RectF rect;
 
 	Handler handler;
 
@@ -75,6 +74,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		this.faces = faces;
 		invalidate();
 
+	}
+
+	public List<Face> getFaces() {
+		return this.faces;
 	}
 
 	@Override
@@ -237,9 +240,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 			Rectangle faceRect = new Rectangle(x, y, width, height);
 
-			// Toast.makeText(getContext(), "Detected",
-			// Toast.LENGTH_SHORT).show();
-
 			if (faceRect.checkPointInRectangle(new Point(getWidth() / 2,
 					getHeight() / 2))) {
 
@@ -258,8 +258,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	}
 
 	private void drawTomato(Canvas canvas) {
-
-		if (flyingTomato != null)
+		if ((flyingTomato != null) && !flyingTomato.getDoneSplash())
 			flyingTomato.draw(canvas);
 		invalidate();
 
@@ -276,7 +275,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 		flyingTomato = new Tomato(this);
 		invalidate();
-
 	}
 
 	private void drawTarget(Canvas canvas) {
@@ -295,7 +293,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
-	public void prepareMatrix(Matrix matrix, int displayOrientation,
+	public static void prepareMatrix(Matrix matrix, int displayOrientation,
 			int viewWidth, int viewHeight) {
 
 		CameraInfo info = new CameraInfo();
@@ -319,74 +317,4 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	}
 
-}
-
-class Rectangle {
-
-	private int x, y;
-	private int width, height;
-
-	public Rectangle(int x, int y, int width, int height) {
-
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getWith() {
-		return width;
-	}
-
-	public void setWith(int with) {
-		this.width = with;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public boolean checkOverlap(Rectangle rect2) {
-		Point P1 = new Point(x, y);
-		Point P2 = new Point(x + width, y + height);
-		Point P3 = new Point(x + width, y);
-		Point P4 = new Point(x, y + height);
-
-		if (checkPointInRectangle(P1)) {
-
-			return true;
-		}
-
-		return false;
-
-	}
-
-	public boolean checkPointInRectangle(Point p) {
-
-		if (p.x > x && p.x < x + width && p.y > y && p.y < y + height)
-			return true;
-
-		return false;
-	}
 }

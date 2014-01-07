@@ -1,15 +1,24 @@
 package com.example.techcampteam01;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Face;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class SinglePlayActivity extends Activity {
@@ -18,6 +27,8 @@ public class SinglePlayActivity extends Activity {
 	private Camera mCamera;
 	private int numberOfCameras;
 	private int cameraCurrentlyLocked;
+	private List<Face> faces;
+	private Matrix matrix;
 
 	// The first rear facing camera
 	int defaultCameraId;
@@ -27,6 +38,7 @@ public class SinglePlayActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		matrix = new Matrix();
 		setContentView(R.layout.single_play);
 
 		FrameLayout previewLayout = (FrameLayout) findViewById(R.id.preview);
@@ -66,7 +78,40 @@ public class SinglePlayActivity extends Activity {
 	public void fire() {
 
 		mPreview.assignTomatoToPreview();
+		faces = mPreview.getFaces();
+		RectF rect = new RectF();
+		int centerX = mPreview.getWidth() / 2;
+		int centerY = mPreview.getHeight() / 2;
 
+		// Rectangle targetRect = new Rectangle(centerX - width / 2, centerY -
+		// height / 2,
+		// width, height);
+		Preview.prepareMatrix(matrix, 90, mPreview.getWidth(),
+				mPreview.getHeight());
+		for (int i = 0; i < faces.size(); i++)
+
+		{
+			Face face = faces.get(i);
+			rect.set(face.rect);
+			matrix.mapRect(rect);
+			int width = (int) rect.width();
+			int height = (int) rect.height();
+			int x = (int) rect.centerX() - width / 2;
+			int y = (int) rect.centerY() - height / 2;
+
+			Rectangle faceRect = new Rectangle(x, y, width, height);
+
+			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
+				Toast.makeText(SinglePlayActivity.this, "Target Hit",
+						Toast.LENGTH_SHORT).show();
+
+			}
+
+			else {
+				Toast.makeText(SinglePlayActivity.this, "Target Miss",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	// public Tomato getTomato() {
