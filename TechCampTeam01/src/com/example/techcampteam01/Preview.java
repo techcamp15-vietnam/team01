@@ -324,6 +324,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		listTomatoOnScreen.add(tomato);
 		// invalidate();
 	}
+	/**
+	 * @author ティエップ
+	 * @return List Tomato in Screen
+	 */
 
 	public List<Tomato> getListHolder() {
 		return this.listTomatoOnScreen;
