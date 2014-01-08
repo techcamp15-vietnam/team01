@@ -229,12 +229,14 @@ containing a value of this type.
         public static final int tomato2=0x7f02002a;
     }
     public static final class id {
-        public static final int action_settings=0x7f04002a;
+        public static final int action_settings=0x7f04002c;
         public static final int btnExit=0x7f040006;
         public static final int btnOption=0x7f040005;
         public static final int btnStart=0x7f040004;
         public static final int btn_share=0x7f040022;
-        public static final int btn_start=0x7f040025;
+        public static final int btn_start=0x7f040027;
+        public static final int checkbox_music=0x7f040023;
+        public static final int checkbox_sound=0x7f040024;
         public static final int com_facebook_login_activity_progress_bar=0x7f040009;
         public static final int com_facebook_picker_activity_circle=0x7f040008;
         public static final int com_facebook_picker_checkbox=0x7f04000b;
@@ -259,18 +261,18 @@ containing a value of this type.
         public static final int large=0x7f040002;
         public static final int name=0x7f040003;
         public static final int normal=0x7f040001;
-        public static final int pause_btn=0x7f040027;
+        public static final int pause_btn=0x7f040029;
         public static final int pause_title_image=0x7f04001c;
         public static final int picker_subtitle=0x7f040016;
-        public static final int preview=0x7f040024;
+        public static final int preview=0x7f040026;
         public static final int resume_button=0x7f04001d;
         public static final int retry_button=0x7f04001e;
         public static final int return_to_main=0x7f04001f;
         public static final int small=0x7f040000;
-        public static final int text_view=0x7f040023;
-        public static final int text_view_timer=0x7f040029;
-        public static final int textview_score=0x7f040028;
-        public static final int tomato_fire=0x7f040026;
+        public static final int text_view=0x7f040025;
+        public static final int text_view_timer=0x7f04002b;
+        public static final int textview_score=0x7f04002a;
+        public static final int tomato_fire=0x7f040028;
         public static final int tv_score=0x7f040021;
     }
     public static final class layout {
@@ -291,7 +293,8 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment=0x7f03000e;
         public static final int pause_dialog=0x7f03000f;
         public static final int result_layout=0x7f030010;
-        public static final int single_play=0x7f030011;
+        public static final int setting=0x7f030011;
+        public static final int single_play=0x7f030012;
     }
     public static final class menu {
         public static final int main=0x7f090000;

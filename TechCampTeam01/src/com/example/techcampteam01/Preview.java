@@ -50,10 +50,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	private List<Tomato> listTomatoOnScreen; // Hold tomatos on screen.
 
+	private boolean haveFaceInCenter;
+
 	/**
 	 * Camera Preview Constructor
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 * @param context
 	 *            the parent context
 	 */
@@ -76,10 +78,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		handler = new Handler();
 		listTomatoOnScreen = new ArrayList<Tomato>();
 
+		haveFaceInCenter = false;
+
 	}
 
 	/**
-	 * set faces listed from the camera to Preview's Class attribute
+	 * @author ティエップ set faces listed from the camera to Preview's Class
+	 *         attribute
 	 * 
 	 * @param faces
 	 *            The list of detected faces returned from camera
@@ -100,7 +105,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * immediately after any structural changes (format or size) have been made
 	 * to the surface. Start faces detection from here
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 * 
 	 */
 	@Override
@@ -217,7 +222,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	/**
 	 * Start detecting faces
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	@SuppressLint("NewApi")
 	public void startDetection() {
@@ -237,7 +242,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * Draw detected faces's rectangle area onto the screen. Call drawTomato
 	 * method.
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	@SuppressLint("DrawAllocation")
 	@Override
@@ -245,6 +250,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 		drawTarget(canvas);
 		prepareMatrix(matrix, 90, getWidth(), getHeight());
+
+		boolean haveFace = false;
 
 		for (int i = 0; i < faces.size(); i++)
 
@@ -273,6 +280,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 					getHeight() / 2))) {
 
 				painter.setColor(Color.GREEN);
+
+				haveFace = true;
+
 			}
 
 			else {
@@ -285,8 +295,14 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 			painter.setColor(Color.RED);
 		}
 
+		haveFaceInCenter = haveFace;
+
 		drawTomato(canvas);
 
+	}
+
+	public boolean haveFaceInCenter() {
+		return this.haveFaceInCenter;
 	}
 
 	/**
@@ -294,7 +310,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * 
 	 * @param canvas
 	 *            Canvas from surface view 's onDraw method
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	private void drawTomato(Canvas canvas) {
 
@@ -311,7 +327,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	/**
 	 * Get a new Tomato when fire button called and add to listTomatoOnScreen
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	public void assignTomatoToPreview() {
 
@@ -337,7 +353,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	/**
 	 * Draw the aim point at the middle of device's screen.
 	 * 
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	private void drawTarget(Canvas canvas) {
 

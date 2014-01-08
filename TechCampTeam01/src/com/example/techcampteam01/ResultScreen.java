@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 public class ResultScreen extends Activity {
 
 	ImageView imgView;
