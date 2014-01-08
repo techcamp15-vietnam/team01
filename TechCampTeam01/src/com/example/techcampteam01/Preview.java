@@ -48,8 +48,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	Tomato flyingTomato;
 
-	List<Tomato> listTomatoOnScreen; // Hold tomatos on screen.
-	
+	private List<Tomato> listTomatoOnScreen; // Hold tomatos on screen.
 
 	/**
 	 * Camera Preview Constructor
@@ -294,10 +293,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 		for (Tomato flyingTomato : listTomatoOnScreen) {
 
-			if ((flyingTomato != null) && !flyingTomato.getDoneSplash())
+			if (flyingTomato != null)
 				flyingTomato.draw(canvas);
 		}
-		
+
 		invalidate();
 
 	}
@@ -308,8 +307,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * @author ティエプ
 	 */
 	public void assignTomatoToPreview() {
-		
-		
+
 		// handler.post(new Runnable() {
 		//
 		// @Override
@@ -320,11 +318,19 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		//
 		// }
 		// });
-		
+
 		Tomato tomato = new Tomato(Preview.this);
-		
+
 		listTomatoOnScreen.add(tomato);
-//		invalidate();
+		// invalidate();
+	}
+
+	public List<Tomato> getListHolder() {
+		return this.listTomatoOnScreen;
+	}
+
+	public Handler getHandler() {
+		return this.handler;
 	}
 
 	/**
