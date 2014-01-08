@@ -29,6 +29,7 @@ public class Tomato {
 	Paint tPaint;
 	Paint bPaint;
 	Paint lPaint;
+	
 
 	// moving speed
 	int velosityX;
