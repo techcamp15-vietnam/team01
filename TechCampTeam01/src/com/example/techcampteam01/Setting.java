@@ -10,7 +10,9 @@ public class Setting {
 	public static boolean musicOn = true;
 
 	/**
-	 * @author ティエップ Set Sound
+	 * Set Sound
+	 * 
+	 * @author ティエップ
 	 * @param isOn
 	 *            is Sound On or Off
 	 */
@@ -20,7 +22,9 @@ public class Setting {
 	}
 
 	/**
-	 * @author ティエップ Set Music
+	 * Set Music
+	 * 
+	 * @author ティエップ
 	 * @param isOn
 	 *            is Music On or Off
 	 */
