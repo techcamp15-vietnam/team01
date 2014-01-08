@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.provider.Settings.System;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +11,9 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.facebook.Session;
+import com.facebook.SessionState;
 
 public class MainActivity extends Activity {
 	ImageView btnStart, btnOption, btnExit;
@@ -23,6 +25,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// start Facebook Login
+		Session.openActiveSession(this, true, new Session.StatusCallback() {
+
+			// callback when session changes state
+			@Override
+			public void call(Session session, SessionState state,
+					Exception exception) {
+
+			}
+		});
 
 		btnStart = (ImageView) findViewById(R.id.btnStart);
 		btnOption = (ImageView) findViewById(R.id.btnOption);
@@ -41,6 +54,18 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		btnOption.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (name.getText().toString().equals("")) {
+					Toast.makeText(getBaseContext(), "Please Enter Your Name",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					callShare();
+				}
+			}
+		});
 
 		btnExit.setOnClickListener(new OnClickListener() {
 
@@ -53,6 +78,11 @@ public class MainActivity extends Activity {
 
 		assetMN = new AssetManager(this);
 		assetMN.load();
+	}
+
+	protected void callShare() {
+		Intent intent = new Intent(this, ResultScreen.class);
+		startActivity(intent);
 	}
 
 	@Override
