@@ -42,11 +42,14 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	private Matrix matrix;
 	private RectF rect;
 
-	Handler handler;
+	Handler handler; // Synchronize Ui
 
 	Rectangle targetRect;
 
 	Tomato flyingTomato;
+
+	List<Tomato> listTomatoOnScreen; // Hold tomatos on screen.
+	
 
 	/**
 	 * Camera Preview Constructor
@@ -72,6 +75,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		painter.setStrokeWidth(3);
 
 		handler = new Handler();
+		listTomatoOnScreen = new ArrayList<Tomato>();
 
 	}
 
@@ -287,20 +291,40 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * @author ティエプ
 	 */
 	private void drawTomato(Canvas canvas) {
-		if ((flyingTomato != null) && !flyingTomato.getDoneSplash())
-			flyingTomato.draw(canvas);
+
+		for (Tomato flyingTomato : listTomatoOnScreen) {
+
+			if ((flyingTomato != null) && !flyingTomato.getDoneSplash())
+				flyingTomato.draw(canvas);
+		}
+		
 		invalidate();
+
 	}
 
 	/**
-	 * Get a new Tomato when fire button called
+	 * Get a new Tomato when fire button called and add to listTomatoOnScreen
 	 * 
 	 * @author ティエプ
 	 */
 	public void assignTomatoToPreview() {
-
-		flyingTomato = new Tomato(this);
-		invalidate();
+		
+		
+		// handler.post(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// // TODO Auto-generated method stub
+		//
+		// // invalidate();
+		//
+		// }
+		// });
+		
+		Tomato tomato = new Tomato(Preview.this);
+		
+		listTomatoOnScreen.add(tomato);
+//		invalidate();
 	}
 
 	/**

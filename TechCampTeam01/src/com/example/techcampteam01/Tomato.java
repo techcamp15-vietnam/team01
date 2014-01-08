@@ -35,6 +35,8 @@ public class Tomato {
 
 	private Bitmap rawbitmap;
 
+	private Bitmap splashRaw;
+
 	public Tomato(View parent) {
 
 		this.parent = parent;
@@ -48,13 +50,18 @@ public class Tomato {
 		bPaint = new Paint();
 		lPaint = new Paint();
 		lPaint = new Paint(Color.RED);
-		velosityX = parent.getWidth() / 70;
-		velosityY = parent.getHeight() / 70;
+		velosityX = parent.getWidth() / 50;
+		velosityY = parent.getHeight() / 50;
 
 		rawbitmap = BitmapFactory.decodeResource(parent.getResources(),
 				R.drawable.tomato);
+		
+		
 		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
+		
+		 splashRaw = BitmapFactory.decodeResource(
+				parent.getResources(), R.drawable.splash);
 
 	}
 
@@ -66,8 +73,7 @@ public class Tomato {
 
 		if (x < parent.getWidth() / 2 - currentTomtatoSize / 2) {
 			Paint tPaint = new Paint();
-			Bitmap splashRaw = BitmapFactory.decodeResource(
-					parent.getResources(), R.drawable.splash);
+			
 			Bitmap splash = Bitmap.createScaledBitmap(splashRaw,
 					currentTomtatoSize, currentTomtatoSize, true);
 			canvas.drawBitmap(splash, x, y, tPaint);
@@ -84,6 +90,11 @@ public class Tomato {
 				currentTomtatoSize, true);
 
 	}
+	
+	/**
+	 * @author ミン・ドゥック 
+	 * @return true if Tomato Splash done.
+	 */
 
 	public boolean getDoneSplash() {
 		return splashDone;
