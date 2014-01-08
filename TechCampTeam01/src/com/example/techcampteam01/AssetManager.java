@@ -22,7 +22,7 @@ public class AssetManager {
 	}
 
 	/**
-	 * @author ティエップ Load Resoucre.
+	 * @author ティエップ Load Resource.
 	 */
 
 	public void load() {
