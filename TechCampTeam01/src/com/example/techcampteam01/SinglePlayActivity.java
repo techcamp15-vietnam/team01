@@ -12,7 +12,9 @@ import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
+import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
@@ -41,6 +44,26 @@ public class SinglePlayActivity extends Activity {
 
 	private ImageView tomatoFire;
 	private ImageButton pauseBtn;
+
+	private TextView scoreTV;
+	private TextView timerTV;
+	private Button startBT;
+
+	private int countTimePlay;
+
+	private static final int TIME_PLAY_IN_SECOND = 2000;
+
+	private Thread timeCounterThread;
+
+	private Handler handler;
+
+	public enum GameState {
+		PLAYING, START, PAUSE, STOP;
+	}
+
+	private GameState state;
+
+	private int score;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +88,12 @@ public class SinglePlayActivity extends Activity {
 
 		pauseBtn = (ImageButton) findViewById(R.id.pause_btn);
 		tomatoFire = (ImageView) findViewById(R.id.tomato_fire);
+		scoreTV = (TextView) findViewById(R.id.textview_score);
+		timerTV = (TextView) findViewById(R.id.text_view_timer);
+		startBT = (Button) findViewById(R.id.btn_start);
+
+		tomatoFire.setEnabled(false);
+
 		tomatoFire.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -72,12 +101,7 @@ public class SinglePlayActivity extends Activity {
 				fire();
 			}
 		});
-		/**
-		 * 
-		 * Show pause dialog when pause button clicked
-		 * 
-		 * @author ミン・ドゥック
-		 */
+
 		pauseBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -87,7 +111,174 @@ public class SinglePlayActivity extends Activity {
 			}
 		});
 
+		startBT.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				startGame();
+
+			}
+		});
+
+		countTimePlay = TIME_PLAY_IN_SECOND;
+
+		timerTV.setText("Time : " + countTimePlay / 1000 + "");
+
+		timeCounterThread = new TimeCounterThread();
+		handler = new Handler();
+
+		// state = GameState.START;
+		setGameState(GameState.START);
+
+		score = 0;
+		setScore(score);
+
 	}
+
+	/**
+	 * Display score in Screen
+	 * 
+	 * @param score
+	 *            User's score
+	 */
+
+	private void setScore(int score) {
+		scoreTV.setText("Score : " + score);
+	}
+
+	/**
+	 * start Game
+	 * 
+	 * @author ティエップ
+	 */
+
+	protected void startGame() {
+		tomatoFire.setEnabled(true);
+		startBT.setVisibility(View.GONE);
+		startTime();
+		// state = GameState.PLAYING;
+		setGameState(GameState.PLAYING);
+
+	}
+
+	/**
+	 * @author ティエップ
+	 * @param state
+	 *            game's state
+	 */
+
+	private void setGameState(GameState state) {
+		this.state = state;
+		if (this.state == GameState.STOP)
+
+		{
+			handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+
+					takePicture();
+
+				}
+			});
+
+		}
+	}
+
+	/**
+	 * Call take picture' function of Camera.
+	 * 
+	 * @author ティエップ
+	 */
+
+	private void takePicture() {
+
+		mPreview.getCamera().takePicture(null, null, new PictureCallback() {
+
+			@Override
+			public void onPictureTaken(byte[] data, Camera camera) {
+
+				// Toast.makeText(getBaseContext(), "Chup hinh",
+				// Toast.LENGTH_SHORT).show();
+				gotoResultScreen(data);
+			}
+		});
+
+	}
+
+	/**
+	 * @author ティエップ
+	 * @param imageByte
+	 *            Byte array taken pictrue from Camera
+	 */
+
+	private void gotoResultScreen(byte[] imageByte) {
+		Intent intent = new Intent(this, ResultScreen.class);
+		intent.putExtra("score", score);
+		intent.putExtra("image", imageByte);
+		SinglePlayActivity.this.startActivity(intent);
+		SinglePlayActivity.this.finish();
+	}
+
+	/**
+	 * Timer Counter Class
+	 * 
+	 * @author ティエップ
+	 * 
+	 */
+	class TimeCounterThread extends Thread {
+
+		@Override
+		public void run() {
+
+			while (countTimePlay >= 0) {
+
+				try {
+					Thread.sleep(500);
+					if (state == GameState.PLAYING) {
+						countTimePlay -= 500;
+						final int displayNumber = (int) (countTimePlay / 1000);
+
+						handler.post(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								timerTV.setText("Time : " + displayNumber + "");
+
+							}
+						});
+
+					}
+
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			setGameState(GameState.STOP);
+
+		}
+
+	}
+
+	/**
+	 * start Timer
+	 * 
+	 * @author ティエップ
+	 */
+
+	private void startTime() {
+
+		timeCounterThread.start();
+
+	}
+
+	/**
+	 * @author Duc
+	 */
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -104,6 +295,7 @@ public class SinglePlayActivity extends Activity {
 	public void fire() {
 
 		mPreview.assignTomatoToPreview();
+
 		faces = mPreview.getFaces();
 		RectF rect = new RectF();
 		int centerX = mPreview.getWidth() / 2;
@@ -125,19 +317,31 @@ public class SinglePlayActivity extends Activity {
 			Rectangle faceRect = new Rectangle(x, y, width, height);
 
 			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
-				Toast.makeText(SinglePlayActivity.this, "Target Hit",
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(SinglePlayActivity.this, "Target Hit",
+				// Toast.LENGTH_SHORT).show();
+
+				score += 1;
+				setScore(score);
 			}
 
 			else {
-				Toast.makeText(SinglePlayActivity.this, "Target Miss",
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(SinglePlayActivity.this, "Target Miss",
+				// Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 
+	/**
+	 * 
+	 * Show pause dialog when pause button clicked
+	 * 
+	 * @author ミン・ドゥック
+	 */
+
 	public void pause() {
 
+		// state = GameState.PAUSE;
+		setGameState(GameState.PAUSE);
 		// TODO Auto-generated method stub
 		Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
 				.show();
@@ -155,7 +359,13 @@ public class SinglePlayActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
+				if (state == GameState.PAUSE) {
+					// state = GameState.PLAYING;
+
+					setGameState(GameState.PLAYING);
+
+				}
 				dialog.dismiss();
 			}
 		});
@@ -180,6 +390,8 @@ public class SinglePlayActivity extends Activity {
 				finish();
 			}
 		});
+
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 
 	}
@@ -196,6 +408,7 @@ public class SinglePlayActivity extends Activity {
 		super.onPause();
 		// Because the Camera object is a shared resource, it's very
 		// important to release it when the activity is paused.
+
 		if (mCamera != null) {
 			mPreview.setCamera(null);
 			mCamera.release();

@@ -26,17 +26,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// start Facebook Login
-		Session.openActiveSession(this, true, new Session.StatusCallback() {
-
-			// callback when session changes state
-			@Override
-			public void call(Session session, SessionState state,
-					Exception exception) {
-
-			}
-		});
-
 		btnStart = (ImageView) findViewById(R.id.btnStart);
 		btnOption = (ImageView) findViewById(R.id.btnOption);
 		btnExit = (ImageView) findViewById(R.id.btnExit);
