@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//
 
 		btnStart = (ImageView) findViewById(R.id.btnStart);
 		btnOption = (ImageView) findViewById(R.id.btnOption);
