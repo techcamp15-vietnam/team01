@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -34,7 +35,8 @@ public class SinglePlayActivity extends Activity {
 	// The first rear facing camera
 	int defaultCameraId;
 
-	ImageView tomatoFire;
+	private ImageView tomatoFire;
+	private ImageButton pauseBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class SinglePlayActivity extends Activity {
 			}
 		}
 
+		pauseBtn = (ImageButton) findViewById(R.id.pause_btn);
 		tomatoFire = (ImageView) findViewById(R.id.tomato_fire);
 		tomatoFire.setOnClickListener(new OnClickListener() {
 
@@ -65,7 +68,15 @@ public class SinglePlayActivity extends Activity {
 				fire();
 			}
 		});
-		initButtons();
+		pauseBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(SinglePlayActivity.this, "Pause",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	/**
@@ -104,10 +115,6 @@ public class SinglePlayActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		}
-	}
-
-	private void initButtons() {
-
 	}
 
 	@Override
