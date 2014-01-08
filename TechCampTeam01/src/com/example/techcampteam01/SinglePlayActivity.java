@@ -75,6 +75,7 @@ public class SinglePlayActivity extends Activity {
 				// TODO Auto-generated method stub
 				Toast.makeText(SinglePlayActivity.this, "Pause",
 						Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 	}
