@@ -139,6 +139,9 @@ public class Tomato {
 	public void setDoneSplash(boolean splashDone) {
 		this.splashDone = splashDone;
 	}
+	/**
+	 * Remove this Tomato from list Holder in Preview.
+	 */
 
 	private void removeFromListHolder() {
 		List<Tomato> listHolder = ((Preview) parent).getListHolder();
