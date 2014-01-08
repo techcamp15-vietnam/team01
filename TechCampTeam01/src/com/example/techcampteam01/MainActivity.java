@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	ImageView btnStart, btnOption, btnExit;
+	private AssetManager assetMN;
 	private static final int SINGLE = 1;
 	private static final int MULTI = 2;
 
@@ -49,6 +50,16 @@ public class MainActivity extends Activity {
 
 			}
 		});
+
+		assetMN = new AssetManager(this);
+		assetMN.load();
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		assetMN.disposeResoure();
+		super.onDestroy();
 	}
 
 	/**
@@ -93,5 +104,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 }

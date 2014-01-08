@@ -211,5 +211,4 @@ public class SinglePlayActivity extends Activity {
 
 	}
 
-	
 }

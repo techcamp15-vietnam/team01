@@ -308,22 +308,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 */
 	public void assignTomatoToPreview() {
 
-		// handler.post(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// // TODO Auto-generated method stub
-		//
-		// // invalidate();
-		//
-		// }
-		// });
-
-		Tomato tomato = new Tomato(Preview.this);
+		Tomato tomato = new Tomato(this);
 
 		listTomatoOnScreen.add(tomato);
 		// invalidate();
 	}
+
 	/**
 	 * @author ティエップ
 	 * @return List Tomato in Screen
