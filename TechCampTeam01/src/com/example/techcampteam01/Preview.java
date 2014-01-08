@@ -276,7 +276,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 			}
 
-
 			canvas.drawRect(rect, painter);
 			painter.setColor(Color.RED);
 		}
@@ -364,6 +363,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 * @param viewWidth
 	 * @param viewHeight
 	 */
+
 	public static void prepareMatrix(Matrix matrix, int displayOrientation,
 			int viewWidth, int viewHeight) {
 
@@ -384,6 +384,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	public void onFaceDetection(android.hardware.Camera.Face[] arg0, Camera arg1) {
 
 		setFaces(Arrays.asList(arg0));
+
+	}
+
+	public Camera getCamera() {
+
+		return this.mCamera;
 
 	}
 

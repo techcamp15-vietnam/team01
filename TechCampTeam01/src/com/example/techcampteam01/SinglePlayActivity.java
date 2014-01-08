@@ -6,12 +6,16 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
+import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -50,14 +54,14 @@ public class SinglePlayActivity extends Activity {
 
 	private int countTimePlay;
 
-	private static final int TIME_PLAY_IN_SECOND = 30000;
+	private static final int TIME_PLAY_IN_SECOND = 2000;
 
 	private Thread timeCounterThread;
 
 	private Handler handler;
 
 	public enum GameState {
-		PLAYING, START, PAUSE;
+		PLAYING, START, PAUSE, STOP;
 	}
 
 	private GameState state;
@@ -127,7 +131,8 @@ public class SinglePlayActivity extends Activity {
 		timeCounterThread = new TimeCounterThread();
 		handler = new Handler();
 
-		state = GameState.START;
+		// state = GameState.START;
+		setGameState(GameState.START);
 
 		score = 0;
 		setScore(score);
@@ -148,8 +153,52 @@ public class SinglePlayActivity extends Activity {
 		tomatoFire.setEnabled(true);
 		startBT.setVisibility(View.GONE);
 		startTime();
-		state = GameState.PLAYING;
+		// state = GameState.PLAYING;
+		setGameState(GameState.PLAYING);
 
+	}
+
+	private void setGameState(GameState state) {
+		this.state = state;
+		if (this.state == GameState.STOP)
+
+		{
+			handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+
+					takePicture();
+
+				}
+			});
+
+		}
+	}
+
+	private void takePicture() {
+
+		mPreview.getCamera().takePicture(null, null, new PictureCallback() {
+
+			@Override
+			public void onPictureTaken(byte[] data, Camera camera) {
+
+				// Toast.makeText(getBaseContext(), "Chup hinh",
+				// Toast.LENGTH_SHORT).show();
+				gotoResultScreen(data);
+			}
+		});
+
+	}
+
+	
+
+	private void gotoResultScreen(byte[] imageByte) {
+		Intent intent = new Intent(this, ResultScreen.class);
+		intent.putExtra("score", score);
+		intent.putExtra("image", imageByte);
+		SinglePlayActivity.this.startActivity(intent);
+		// SinglePlayActivity.this.finish();
 	}
 
 	/**
@@ -188,6 +237,8 @@ public class SinglePlayActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
+
+			setGameState(GameState.STOP);
 
 		}
 
@@ -254,8 +305,8 @@ public class SinglePlayActivity extends Activity {
 			}
 
 			else {
-				Toast.makeText(SinglePlayActivity.this, "Target Miss",
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(SinglePlayActivity.this, "Target Miss",
+				// Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -269,7 +320,8 @@ public class SinglePlayActivity extends Activity {
 
 	public void pause() {
 
-		state = GameState.PAUSE;
+		// state = GameState.PAUSE;
+		setGameState(GameState.PAUSE);
 		// TODO Auto-generated method stub
 		Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
 				.show();
@@ -288,8 +340,12 @@ public class SinglePlayActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				if (state == GameState.PAUSE)
-					state = GameState.PLAYING;
+				if (state == GameState.PAUSE) {
+					// state = GameState.PLAYING;
+
+					setGameState(GameState.PLAYING);
+
+				}
 				dialog.dismiss();
 			}
 		});
@@ -329,7 +385,7 @@ public class SinglePlayActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		// super.onPause();
+		super.onPause();
 		// Because the Camera object is a shared resource, it's very
 		// important to release it when the activity is paused.
 
