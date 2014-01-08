@@ -3,6 +3,9 @@ package com.example.techcampteam01;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
+import android.provider.Settings.System;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,13 +18,10 @@ public class MainActivity extends Activity {
 	private static final int SINGLE = 1;
 	private static final int MULTI = 2;
 
-	AssetManager assetMN;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//
 
 		btnStart = (ImageView) findViewById(R.id.btnStart);
 		btnOption = (ImageView) findViewById(R.id.btnOption);
@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 							Toast.LENGTH_SHORT).show();
 				} else {
 					callSinglePlay();
-					finish();
 				}
 			}
 		});
@@ -50,10 +49,6 @@ public class MainActivity extends Activity {
 
 			}
 		});
-
-		assetMN = new AssetManager(this);
-		assetMN.load();
-
 	}
 
 	/**
@@ -63,8 +58,8 @@ public class MainActivity extends Activity {
 	 * @author 1-A トゥン
 	 */
 	private void callSinglePlay() {
-		Intent intent = new Intent(getBaseContext(), SinglePlayActivity.class);
-		intent.putExtra("ABC", "data");
+		Intent intent = new Intent(this, SinglePlayActivity.class);
+		// intent.putExtra("ABC", "data");
 		startActivity(intent);
 	}
 
@@ -75,7 +70,21 @@ public class MainActivity extends Activity {
 	 * @author 1-A トゥン
 	 */
 	private void exit() {
-		System.exit(0);
+		Process.killProcess(Process.myPid());
+	}
+
+	/**
+	 * Kill application when touching back button on the screen
+	 * 
+	 * @author ミン・ドゥック
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Process.killProcess(Process.myPid());
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
@@ -85,16 +94,4 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	/**
-	 * Dispose Resoure when not using.
-	 * @author ティエップ
-	 */
-
-	@Override
-	protected void onDestroy() {
-
-		assetMN.disposeResoure();
-		super.onDestroy();
-	}
-
 }
