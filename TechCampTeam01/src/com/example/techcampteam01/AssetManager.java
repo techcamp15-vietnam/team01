@@ -5,6 +5,7 @@ package com.example.techcampteam01;
  * Manage resource
  */
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class AssetManager {
 
@@ -25,6 +26,12 @@ public class AssetManager {
 	 */
 
 	public void load() {
+
+		rawbitmap = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.tomato);
+
+		splashRaw = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.splash);
 
 	}
 
