@@ -6,9 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
-import android.view.View;
-import android.widget.Space;
 
 public class Tomato {
 	/**
@@ -139,6 +136,7 @@ public class Tomato {
 	public void setDoneSplash(boolean splashDone) {
 		this.splashDone = splashDone;
 	}
+
 	/**
 	 * Remove this Tomato from list Holder in Preview.
 	 */
