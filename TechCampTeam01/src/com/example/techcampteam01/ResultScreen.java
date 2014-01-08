@@ -54,6 +54,16 @@ public class ResultScreen extends Activity {
 
 	}
 
+	/**
+	 * @author ドゥック Merge two Bitmaps
+	 * 
+	 * @param bBitmap
+	 *            Bitmap 1
+	 * @param sBitmap
+	 *            Bitmap 2
+	 * @return
+	 */
+
 	public Bitmap mergeBitmap(Bitmap bBitmap, Bitmap sBitmap) {
 		Bitmap mergedBitmap = Bitmap.createBitmap(bBitmap.getWidth(),
 				bBitmap.getHeight(), Config.ARGB_8888);

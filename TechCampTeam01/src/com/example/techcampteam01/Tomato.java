@@ -29,7 +29,6 @@ public class Tomato {
 	Paint tPaint;
 	Paint bPaint;
 	Paint lPaint;
-	
 
 	// moving speed
 	int velosityX;
@@ -139,7 +138,7 @@ public class Tomato {
 	}
 
 	/**
-	 * Remove this Tomato from list Holder in Preview.
+	 * @author ティエップ Remove this Tomato from list Holder in Preview.
 	 */
 
 	private void removeFromListHolder() {

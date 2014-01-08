@@ -139,6 +139,13 @@ public class SinglePlayActivity extends Activity {
 
 	}
 
+	/**
+	 * Display score in Screen
+	 * 
+	 * @param score
+	 *            User's score
+	 */
+
 	private void setScore(int score) {
 		scoreTV.setText("Score : " + score);
 	}
@@ -158,6 +165,12 @@ public class SinglePlayActivity extends Activity {
 
 	}
 
+	/**
+	 * @author ティエップ
+	 * @param state
+	 *            game's state
+	 */
+
 	private void setGameState(GameState state) {
 		this.state = state;
 		if (this.state == GameState.STOP)
@@ -176,6 +189,12 @@ public class SinglePlayActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Call take picture' function of Camera.
+	 * 
+	 * @author ティエップ
+	 */
+
 	private void takePicture() {
 
 		mPreview.getCamera().takePicture(null, null, new PictureCallback() {
@@ -191,7 +210,11 @@ public class SinglePlayActivity extends Activity {
 
 	}
 
-	
+	/**
+	 * @author ティエップ
+	 * @param imageByte
+	 *            Byte array taken pictrue from Camera
+	 */
 
 	private void gotoResultScreen(byte[] imageByte) {
 		Intent intent = new Intent(this, ResultScreen.class);

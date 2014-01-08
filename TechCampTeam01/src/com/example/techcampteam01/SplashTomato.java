@@ -47,6 +47,8 @@ public class SplashTomato {
 	/**
 	 * Draw Splash
 	 * 
+	 * @author ティエップ
+	 * 
 	 * @param canvas
 	 *            canvas to draw Bitmap
 	 */

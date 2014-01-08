@@ -174,6 +174,11 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		}
 	};
 
+	/**
+	 * 　 Take Picture
+	 * 
+	 * @author ティエップ
+	 */
 	public void takePicture() {
 		if (mCamera == null) {
 			return;
@@ -380,6 +385,11 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		matrix.postTranslate(viewWidth / 2f, viewHeight / 2f);
 	}
 
+	/**
+	 * get Face list from Camera;
+	 * 
+	 * @author ティエップ
+	 */
 	@Override
 	public void onFaceDetection(android.hardware.Camera.Face[] arg0, Camera arg1) {
 
