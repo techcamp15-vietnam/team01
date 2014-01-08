@@ -14,7 +14,9 @@ public class MainActivity extends Activity {
 	ImageView btnStart, btnOption, btnExit;
 	private static final int SINGLE = 1;
 	private static final int MULTI = 2;
-	
+
+	AssetManager assetMN;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,11 +49,15 @@ public class MainActivity extends Activity {
 
 			}
 		});
+
+		assetMN = new AssetManager(this);
+		assetMN.load();
+
 	}
 
-	
 	/**
-	 * call  single player mode activity
+	 * call single player mode activity
+	 * 
 	 * @param null
 	 * @author 1-A トゥン
 	 */
@@ -76,6 +82,18 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	/**
+	 * Dispose Resoure when not using.
+	 * @author ティエップ
+	 */
+
+	@Override
+	protected void onDestroy() {
+
+		assetMN.disposeResoure();
+		super.onDestroy();
 	}
 
 }
