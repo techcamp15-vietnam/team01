@@ -4,6 +4,9 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -11,9 +14,12 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +37,6 @@ public class SinglePlayActivity extends Activity {
 	private int cameraCurrentlyLocked;
 	private List<Face> faces;
 	private Matrix matrix;
-
 	// The first rear facing camera
 	int defaultCameraId;
 
@@ -68,6 +73,12 @@ public class SinglePlayActivity extends Activity {
 				fire();
 			}
 		});
+		/**
+		 * 
+		 * Show pause dialog when pause button clicked
+		 * 
+		 * @author ミン・ドゥック
+		 */
 		pauseBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,9 +86,62 @@ public class SinglePlayActivity extends Activity {
 				// TODO Auto-generated method stub
 				Toast.makeText(SinglePlayActivity.this, "Pause",
 						Toast.LENGTH_SHORT).show();
-				
+				final Dialog dialog = new Dialog(v.getContext());
+				LayoutInflater inflater = LayoutInflater
+						.from(SinglePlayActivity.this);
+				View dialogView = inflater.inflate(R.layout.pause_dialog, null,
+						false);
+				dialog.setContentView(dialogView);
+
+				Button resumeBtn = (Button) dialogView
+						.findViewById(R.id.resume_button);
+				Button retryBtn = (Button) dialogView
+						.findViewById(R.id.retry_button);
+				Button returnMainBtn = (Button) dialogView
+						.findViewById(R.id.return_to_main);
+
+				resumeBtn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						dialog.dismiss();
+					}
+				});
+
+				retryBtn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(SinglePlayActivity.this
+								.getBaseContext(), SinglePlayActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
+
+				returnMainBtn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						finish();
+					}
+				});
+				dialog.show();
 			}
 		});
+
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	/**
@@ -147,4 +211,5 @@ public class SinglePlayActivity extends Activity {
 
 	}
 
+	
 }
