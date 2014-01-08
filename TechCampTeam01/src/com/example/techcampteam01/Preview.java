@@ -249,7 +249,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 			rect.set(face.rect);
 			matrix.mapRect(rect);
-			canvas.drawRect(rect, painter);
 			Activity activity = (Activity) getContext();
 			TextView textView = (TextView) activity
 					.findViewById(R.id.text_view);
@@ -276,6 +275,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 				painter.setColor(Color.RED);
 
 			}
+
+
+			canvas.drawRect(rect, painter);
+			painter.setColor(Color.RED);
 		}
 
 		drawTomato(canvas);
@@ -334,6 +337,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 */
 	private void drawTarget(Canvas canvas) {
 
+		painter.setColor(Color.RED);
+
 		int centerX = getWidth() / 2;
 		int centerY = getHeight() / 2;
 
@@ -345,6 +350,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 		canvas.drawRect(new RectF(targetRect.getX(), targetRect.getY(),
 				targetRect.getX() + width, targetRect.getY() + height), painter);
+
+		painter.setColor(Color.RED);
 
 	}
 
