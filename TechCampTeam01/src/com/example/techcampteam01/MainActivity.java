@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.provider.Settings.System;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -42,6 +41,16 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		btnOption.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				gotoSetting();
+
+			}
+		});
+
 		btnExit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -53,6 +62,25 @@ public class MainActivity extends Activity {
 
 		assetMN = new AssetManager(this);
 		assetMN.load();
+
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		showToat(Setting.musicOn);
+	}
+	
+	/**Go to Setting Screen
+	 * @author ティエップ
+	 */
+
+	protected void gotoSetting() {
+
+		Intent intent = new Intent(this, SettingScreen.class);
+		startActivity(intent);
+
 	}
 
 	@Override
@@ -103,6 +131,10 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	public void showToat(boolean value) {
+		Toast.makeText(this, value + "", Toast.LENGTH_SHORT).show();
 	}
 
 }

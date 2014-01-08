@@ -8,6 +8,10 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 public class SettingScreen extends Activity {
+	
+	/**
+	 * @author ティエップ
+	 */
 
 	CheckBox musicCB;
 	CheckBox soundCB;
