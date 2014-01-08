@@ -38,6 +38,8 @@
             android:name="com.example.techcampteam01.ResultScreen"
             android:label="@string/app_name" >
         </activity>
+        <activity android:name="com.example.techcampteam01.SettingScreen" >
+        </activity>
     </application>
 
 </manifest>
