@@ -5,7 +5,7 @@ import android.graphics.Point;
 /**
  * 
  * 
- * @author ティエプ
+ * @author ティエップ
  * 
  */
 public class Rectangle {
@@ -54,6 +54,14 @@ public class Rectangle {
 		this.height = height;
 	}
 
+	/**
+	 * Check overlap with other Rectangle
+	 * 
+	 * @author ティエップ
+	 * @param rect2
+	 * @return true if overlap, otherwise return false
+	 */
+
 	public boolean checkOverlap(Rectangle rect2) {
 		Point P1 = new Point(x, y);
 		Point P2 = new Point(x + width, y + height);
@@ -68,6 +76,14 @@ public class Rectangle {
 		return false;
 
 	}
+
+	/**
+	 * Check Point p is in Rectangle
+	 * 
+	 * @param p
+	 *            Point
+	 * @return true if p is in Rectangle, otherwise return false;
+	 */
 
 	public boolean checkPointInRectangle(Point p) {
 

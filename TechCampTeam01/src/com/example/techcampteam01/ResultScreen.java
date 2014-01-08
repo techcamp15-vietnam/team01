@@ -12,7 +12,7 @@ import android.widget.ImageView;
 /**
  * Display result screen of game.
  * 
- * @author ティエプ
+ * @author ティエップ
  * 
  */
 

@@ -12,7 +12,7 @@ public class Tomato {
 	 * Tomato object
 	 * 
 	 * @author ミン・ドゥック
-	 * @author ティエプ
+	 * @author ティエップ
 	 */
 	private static final int MAX_PICTURE_SIZE = 180; // max size of tomato's
 														// picture will be
