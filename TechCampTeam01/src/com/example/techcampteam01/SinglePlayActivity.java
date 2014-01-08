@@ -54,7 +54,7 @@ public class SinglePlayActivity extends Activity {
 
 	private int countTimePlay;
 
-	private static final int TIME_PLAY_IN_SECOND = 2000;
+	private static final int TIME_PLAY_IN_SECOND = 30000;
 
 	private Thread timeCounterThread;
 
@@ -221,7 +221,7 @@ public class SinglePlayActivity extends Activity {
 		intent.putExtra("score", score);
 		intent.putExtra("image", imageByte);
 		SinglePlayActivity.this.startActivity(intent);
-		// SinglePlayActivity.this.finish();
+		SinglePlayActivity.this.finish();
 	}
 
 	/**
@@ -328,6 +328,7 @@ public class SinglePlayActivity extends Activity {
 			}
 
 			else {
+
 				// Toast.makeText(SinglePlayActivity.this, "Target Miss",
 				// Toast.LENGTH_SHORT).show();
 			}

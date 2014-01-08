@@ -46,6 +46,8 @@ public class Tomato {
 
 	int drawSplashTime;
 
+	// boolean isAlive;
+
 	public Tomato(Preview parent) {
 
 		this.parent = parent;
@@ -76,6 +78,8 @@ public class Tomato {
 
 		splashDone = false;
 
+		// isAlive = true;
+
 	}
 
 	/**
@@ -86,30 +90,69 @@ public class Tomato {
 	 */
 	public void draw(final Canvas canvas) {
 
+		// if (!isAlive)
+		// return;
+
 		if (splashDone) {
 			// removeFromListHolder();
 			return;
 		}
 
+		if (x < 0)
+			return;
+
 		if (x < parent.getWidth() / 2 - currentTomtatoSize / 2) {
 
 			if (!startFlash) {
-				startFlash = true;
-				drawSplashTime = 500;
+
+				if (parent.haveFaceInCenter()) {
+
+					startFlash = true;
+					drawSplashTime = 500;
+					splash.draw(canvas);
+					return;
+
+				}
+
+				canvas.drawBitmap(scaledBitmap, x, y, bPaint);
+
+				x -= velosityX;
+				y -= velosityY;
+
+				currentTomtatoSize -= 2;
+				if (currentTomtatoSize > 0)
+					scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
+							currentTomtatoSize, currentTomtatoSize, true);
 			}
 
-			if (startFlash) {
+			else {
+
+				// isAlive = false;
 
 				splash.draw(canvas);
 				new SleepThread().start();
 
-				if (drawSplashTime <= 0)
+				if (drawSplashTime <= 0) {
 					splashDone = true;
+					// removeFromListHolder();
+					// isAlive = false;
+
+				}
+			}
+
+			if (!startFlash)
+
+			{
+
 			}
 
 		}
 
 		else {
+
+			if (startFlash)
+				return;
+
 			canvas.drawBitmap(scaledBitmap, x, y, bPaint);
 
 			x -= velosityX;

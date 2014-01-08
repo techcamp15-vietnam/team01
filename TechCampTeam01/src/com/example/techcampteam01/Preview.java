@@ -50,6 +50,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 	private List<Tomato> listTomatoOnScreen; // Hold tomatos on screen.
 
+	private boolean haveFaceInCenter;
+
 	/**
 	 * Camera Preview Constructor
 	 * 
@@ -76,11 +78,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		handler = new Handler();
 		listTomatoOnScreen = new ArrayList<Tomato>();
 
+		haveFaceInCenter = false;
+
 	}
 
 	/**
-	 * @author ティエップ
-	 * set faces listed from the camera to Preview's Class attribute
+	 * @author ティエップ set faces listed from the camera to Preview's Class
+	 *         attribute
 	 * 
 	 * @param faces
 	 *            The list of detected faces returned from camera
@@ -247,6 +251,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		drawTarget(canvas);
 		prepareMatrix(matrix, 90, getWidth(), getHeight());
 
+		boolean haveFace = false;
+
 		for (int i = 0; i < faces.size(); i++)
 
 		{
@@ -274,6 +280,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 					getHeight() / 2))) {
 
 				painter.setColor(Color.GREEN);
+
+				haveFace = true;
+
 			}
 
 			else {
@@ -286,8 +295,14 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 			painter.setColor(Color.RED);
 		}
 
+		haveFaceInCenter = haveFace;
+
 		drawTomato(canvas);
 
+	}
+
+	public boolean haveFaceInCenter() {
+		return this.haveFaceInCenter;
 	}
 
 	/**
