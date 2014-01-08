@@ -1,27 +1,33 @@
 package com.example.techcampteam01;
 
+import java.util.List;
+
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
+import android.widget.Space;
 
 public class Tomato {
-/**
- * Tomato object
- * @author ミン・ドゥック 
- * @author ティエプ
- */
-	private static final int MAX_PICTURE_SIZE = 180; //max size of tomato's picture will be loaded
+	/**
+	 * Tomato object
+	 * 
+	 * @author ミン・ドゥック
+	 * @author ティエプ
+	 */
+	private static final int MAX_PICTURE_SIZE = 180; // max size of tomato's
+														// picture will be
+														// loaded
 
-	private int currentTomtatoSize = MAX_PICTURE_SIZE;
+	private int currentTomtatoSize;
 	// tomato picture's top-left point
 	private float x;
 	private float y;
-	//parent container
-	private View parent;
-	private boolean splashDone = false;
+	// parent container
+	private Preview parent;
+	private boolean splashDone;
 
 	Paint tPaint;
 	Paint bPaint;
@@ -30,19 +36,26 @@ public class Tomato {
 	// moving speed
 	int velosityX;
 	int velosityY;
-	
+
 	private Bitmap scaledBitmap;
 
 	private Bitmap rawbitmap;
 
 	private Bitmap splashRaw;
 
-	public Tomato(View parent) {
+	SplashTomato splash;
+
+	boolean startFlash;
+
+	int drawSplashTime;
+
+	public Tomato(Preview parent) {
 
 		this.parent = parent;
 		x = parent.getWidth() - MAX_PICTURE_SIZE;
 		y = parent.getHeight() - MAX_PICTURE_SIZE;
 
+		currentTomtatoSize = MAX_PICTURE_SIZE;
 		//
 
 		tPaint = new Paint();
@@ -50,49 +63,72 @@ public class Tomato {
 		bPaint = new Paint();
 		lPaint = new Paint();
 		lPaint = new Paint(Color.RED);
-		velosityX = parent.getWidth() / 50;
-		velosityY = parent.getHeight() / 50;
+		velosityX = parent.getWidth() / 30;
+		velosityY = parent.getHeight() / 30 + 3;
 
-		rawbitmap = BitmapFactory.decodeResource(parent.getResources(),
-				R.drawable.tomato);
-		
-		
+		rawbitmap = AssetManager.rawbitmap;
+
+		splashRaw = AssetManager.splashRaw;
+
 		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
-		
-		 splashRaw = BitmapFactory.decodeResource(
-				parent.getResources(), R.drawable.splash);
+
+		splash = new SplashTomato(parent);
+
+		startFlash = false;
+
+		splashDone = false;
 
 	}
 
 	/**
 	 * Draw tomato animation onto the screen
-	 * @param canvas canvas from parent container
+	 * 
+	 * @param canvas
+	 *            canvas from parent container
 	 */
-	public void draw(Canvas canvas) {
+	public void draw(final Canvas canvas) {
 
-		if (x < parent.getWidth() / 2 - currentTomtatoSize / 2) {
-			Paint tPaint = new Paint();
-			
-			Bitmap splash = Bitmap.createScaledBitmap(splashRaw,
-					currentTomtatoSize, currentTomtatoSize, true);
-			canvas.drawBitmap(splash, x, y, tPaint);
-			splashDone = true;
+		if (splashDone) {
+			// removeFromListHolder();
+			return;
 		}
 
-		canvas.drawBitmap(scaledBitmap, x, y, bPaint);
+		if (x < parent.getWidth() / 2 - currentTomtatoSize / 2) {
 
-		x -= velosityX;
-		y -= velosityY;
+			if (!startFlash) {
+				startFlash = true;
+				drawSplashTime = 500;
+			}
 
-		currentTomtatoSize -= 2;
-		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
-				currentTomtatoSize, true);
+			if (startFlash) {
+
+				splash.draw(canvas);
+				new SleepThread().start();
+
+				if (drawSplashTime <= 0)
+					splashDone = true;
+			}
+
+		}
+
+		else {
+			canvas.drawBitmap(scaledBitmap, x, y, bPaint);
+
+			x -= velosityX;
+			y -= velosityY;
+
+			currentTomtatoSize -= 2;
+			if (currentTomtatoSize > 0)
+				scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
+						currentTomtatoSize, currentTomtatoSize, true);
+
+		}
 
 	}
-	
+
 	/**
-	 * @author ミン・ドゥック 
+	 * @author ミン・ドゥック
 	 * @return true if Tomato Splash done.
 	 */
 
@@ -102,6 +138,27 @@ public class Tomato {
 
 	public void setDoneSplash(boolean splashDone) {
 		this.splashDone = splashDone;
+	}
+
+	private void removeFromListHolder() {
+		List<Tomato> listHolder = ((Preview) parent).getListHolder();
+		listHolder.remove(this);
+	}
+
+	class SleepThread extends Thread {
+		@Override
+		public void run() {
+
+			try {
+				Thread.sleep(100);
+				drawSplashTime -= 100;
+
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 }
