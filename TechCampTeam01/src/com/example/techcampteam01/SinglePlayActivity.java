@@ -62,6 +62,8 @@ public class SinglePlayActivity extends Activity {
 
 	private GameState state;
 
+	private int score;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -127,6 +129,13 @@ public class SinglePlayActivity extends Activity {
 
 		state = GameState.START;
 
+		score = 0;
+		setScore(score);
+
+	}
+
+	private void setScore(int score) {
+		scoreTV.setText("Score : " + score);
 	}
 
 	/**
@@ -215,6 +224,7 @@ public class SinglePlayActivity extends Activity {
 	public void fire() {
 
 		mPreview.assignTomatoToPreview();
+
 		faces = mPreview.getFaces();
 		RectF rect = new RectF();
 		int centerX = mPreview.getWidth() / 2;
@@ -236,8 +246,11 @@ public class SinglePlayActivity extends Activity {
 			Rectangle faceRect = new Rectangle(x, y, width, height);
 
 			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
-				Toast.makeText(SinglePlayActivity.this, "Target Hit",
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(SinglePlayActivity.this, "Target Hit",
+				// Toast.LENGTH_SHORT).show();
+
+				score += 1;
+				setScore(score);
 			}
 
 			else {
@@ -316,9 +329,10 @@ public class SinglePlayActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		super.onPause();
+		// super.onPause();
 		// Because the Camera object is a shared resource, it's very
 		// important to release it when the activity is paused.
+
 		if (mCamera != null) {
 			mPreview.setCamera(null);
 			mCamera.release();
