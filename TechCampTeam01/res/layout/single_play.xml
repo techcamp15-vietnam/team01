@@ -55,7 +55,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="4"
             android:text="Score"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#FF000B" />
 
         <TextView
             android:id="@+id/text_view_timer"
@@ -63,7 +64,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="3"
             android:text="Timer"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#FF000B" />
     </LinearLayout>
 
 </RelativeLayout>
