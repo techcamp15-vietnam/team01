@@ -5,6 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
 
+/**
+ * 
+ * @author ティエップ
+ * 
+ */
+
 public class SplashTomato {
 
 	Preview parent;
@@ -24,11 +30,26 @@ public class SplashTomato {
 
 	}
 
+	/**
+	 * Set Splash Size to compatible with Tomato'size
+	 * 
+	 * @author ティエップ
+	 * @param currentTomatoSize
+	 *            : Tomato'size
+	 */
+
 	public void setSizeBaseTomatoSize(int currentTomatoSize) {
 
 		splashRaw = Bitmap.createScaledBitmap(splashRaw, currentTomatoSize,
 				currentTomatoSize, true);
 	}
+
+	/**
+	 * Draw Splash
+	 * 
+	 * @param canvas
+	 *            canvas to draw Bitmap
+	 */
 
 	public void draw(Canvas canvas) {
 
