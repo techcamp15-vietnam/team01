@@ -4,8 +4,10 @@ package com.example.techcampteam01;
  * @author　ティエップ
  * Manage resource
  */
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 
 public class AssetManager {
 
@@ -61,4 +63,55 @@ public class AssetManager {
 
 	}
 
+	public synchronized void playSound(boolean isMute, int idSound,
+			MediaPlayer sound, Context context) {
+		if (isMute == false) {
+			if (sound != null) {
+				sound.release();
+				sound = null;
+			}
+			sound = MediaPlayer.create(context, idSound);
+			if (sound != null) {
+				sound.seekTo(0);
+				sound.start();
+			}
+			Runtime.getRuntime().gc();
+		}
+	}
+
+	public void releaseSound(boolean isMute, MediaPlayer sound) {
+		if (isMute == false && sound != null) {
+			sound.release();
+			sound = null;
+		}
+	}
+
+	public void pauseSound(boolean isMute, MediaPlayer sound) {
+		if (isMute == false && sound != null) {
+			sound.pause();
+		}
+	}
+
+	public void startSound(boolean isMute, MediaPlayer sound) {
+		if (isMute == false && sound != null) {
+			sound.start();
+		}
+	}
+
+	public void playLoopSound(int idSound, boolean isMute, MediaPlayer sound,
+			Context context) {
+		if (isMute == false) {
+			if (sound != null) {
+				sound.release();
+				sound = null;
+			}
+			sound = MediaPlayer.create(context, idSound);
+			if (sound != null) {
+				sound.seekTo(0);
+				sound.setLooping(true);
+				sound.start();
+			}
+			Runtime.getRuntime().gc();
+		}
+	}
 }
