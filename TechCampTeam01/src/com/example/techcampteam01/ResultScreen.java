@@ -19,12 +19,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
+import android.widget.TextView;
 
 public class ResultScreen extends Activity {
 
 	ImageView imgView;
+
+	Button retry;
+
+	Button mainMenu;
+
+	TextView scoreTV;
+
+	TextView highScore;   
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +93,7 @@ public class ResultScreen extends Activity {
 		imgView = (ImageView) findViewById(R.id.img_view);
 		imgView.setImageBitmap(resultImage);
 
-		//save image to storage 
+		// save image to storage
 		File path = Environment
 				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		File imageFile = new File(path, "result.png");
