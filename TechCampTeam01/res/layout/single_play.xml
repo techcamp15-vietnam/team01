@@ -27,6 +27,16 @@
         android:text="Start" />
 
     <ImageView
+        android:id="@+id/timeup_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:rotation="45"
+        android:src="@drawable/timeup"
+        android:visibility="invisible" />
+
+    <ImageView
         android:id="@+id/tomato_fire"
         android:layout_width="100dp"
         android:layout_height="100dp"
