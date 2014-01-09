@@ -13,6 +13,11 @@ public class AssetManager {
 
 	public static Bitmap splashRaw;
 
+	public static Bitmap apple;
+	public static Bitmap egg;
+	public static Bitmap splash1;
+	public static Bitmap splash2;
+
 	MainActivity context;
 
 	public AssetManager(MainActivity context) {
@@ -22,7 +27,9 @@ public class AssetManager {
 	}
 
 	/**
-	 * @author ティエップ Load Resource.
+	 * Load Resource.
+	 * 
+	 * @author ティエップ
 	 */
 
 	public void load() {
@@ -32,6 +39,15 @@ public class AssetManager {
 
 		splashRaw = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.splash);
+
+		apple = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.apple);
+		egg = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.egg);
+		splash1 = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.splash1);
+		splash2 = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.splash2);
 
 	}
 
