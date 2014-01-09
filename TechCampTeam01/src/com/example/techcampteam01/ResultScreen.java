@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -15,9 +16,9 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,16 @@ public class ResultScreen extends Activity {
 				shareImage();
 			}
 		});
+
+		int score = getIntent().getIntExtra("score", 0);
+		if (score > getHighScore())
+			saveHighScore(score);
+
+		scoreTV = (TextView) findViewById(R.id.tv_score);
+		scoreTV.setText(scoreTV.getText().toString() + " : " + score);
+		highScore = (TextView) findViewById(R.id.high_score);
+		highScore.setText(highScore.getText().toString() + " : "
+				+ getHighScore());
 
 	}
 
@@ -163,6 +174,38 @@ public class ResultScreen extends Activity {
 		share.putExtra(Intent.EXTRA_STREAM, uri);
 
 		startActivity(Intent.createChooser(share, "Share Image!"));
+	}
+
+	/**
+	 * @author TiepDV
+	 * @param highScore
+	 */
+
+	public void saveHighScore(int highScore) {
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		SharedPreferences.Editor prefsEditor = appPref.edit();
+		prefsEditor.putInt("highscore", highScore);
+		prefsEditor.commit();
+
+	}
+
+	/**
+	 * @author TiepDV
+	 * @param highScore
+	 * @return
+	 */
+
+	public int getHighScore() {
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		int saveHighScore = 0;
+		saveHighScore = appPref.getInt("highscore", 0);
+		return saveHighScore;
 	}
 
 }

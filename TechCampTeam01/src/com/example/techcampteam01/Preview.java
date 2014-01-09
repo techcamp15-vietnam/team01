@@ -111,11 +111,16 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		Camera.Parameters parameters = mCamera.getParameters();
-		requestLayout();
-		mCamera.setParameters(parameters);
-		mCamera.startPreview();
-		startDetection();
+		
+		if(mCamera!=null)
+		{
+			Camera.Parameters parameters = mCamera.getParameters();
+			requestLayout();
+			mCamera.setParameters(parameters);
+			mCamera.startPreview();
+			startDetection();
+			
+		}
 	}
 
 	@Override
