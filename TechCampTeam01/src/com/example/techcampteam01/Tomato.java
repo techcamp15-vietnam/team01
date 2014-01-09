@@ -86,7 +86,9 @@ public class Tomato {
 		velosityX = parent.getWidth() / 30;
 		velosityY = parent.getHeight() / 30 + 3;
 
-		fruitType = getRandomType();
+		SinglePlayActivity context = (SinglePlayActivity) parent.getContext();
+
+		fruitType = context.getFruitType();
 
 		rawbitmap = getBitmapFromType(fruitType);
 
@@ -301,7 +303,6 @@ public class Tomato {
 					scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
 							currentTomtatoSize, currentTomtatoSize, true);
 			}
-
 
 		}
 

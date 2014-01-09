@@ -2,7 +2,9 @@ package com.example.techcampteam01;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -42,6 +44,7 @@ public class SettingScreen extends Activity {
 				CheckBox checkbox = (CheckBox) v;
 
 				Setting.setMusic(checkbox.isChecked());
+				saveMusicSetting(Setting.musicOn);
 
 			}
 		});
@@ -54,6 +57,7 @@ public class SettingScreen extends Activity {
 				CheckBox checkbox = (CheckBox) v;
 
 				Setting.setSound(checkbox.isChecked());
+				saveSoundSetting(Setting.soundOn);
 
 			}
 		});
@@ -68,6 +72,28 @@ public class SettingScreen extends Activity {
 
 			}
 		});
+
+	}
+
+	public void saveSoundSetting(boolean value) {
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		SharedPreferences.Editor prefsEditor = appPref.edit();
+		prefsEditor.putBoolean("sound", value);
+		prefsEditor.commit();
+
+	}
+
+	public void saveMusicSetting(boolean value) {
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		SharedPreferences.Editor prefsEditor = appPref.edit();
+		prefsEditor.putBoolean("music", value);
+		prefsEditor.commit();
 
 	}
 

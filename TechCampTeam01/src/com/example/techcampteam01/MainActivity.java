@@ -2,8 +2,10 @@ package com.example.techcampteam01;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -56,7 +58,26 @@ public class MainActivity extends Activity {
 		assetMN = new AssetManager(this);
 		assetMN.load();
 
+		loadPreviousSoundSetting();
+
 		playMainMenuSound();
+	}
+
+	private void loadPreviousSoundSetting() {
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		boolean musicOn = true;
+
+		musicOn = appPref.getBoolean("music", true);
+
+		boolean soundOn = true;
+		soundOn = appPref.getBoolean("sound", true);
+
+		Setting.musicOn = musicOn;
+		Setting.soundOn = soundOn;
+
 	}
 
 	private void playMainMenuSound() {
@@ -74,7 +95,7 @@ public class MainActivity extends Activity {
 		} else {
 			AssetManager.playMusic(AssetManager.mainMenuSound);
 		}
-		// showToat(Setting.musicOn);
+		showToat(Setting.musicOn);
 	}
 
 	/**
@@ -134,8 +155,11 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		AssetManager.pauseSound(AssetManager.mainMenuSound);
+
+		if (keyCode == KeyEvent.KEYCODE_BACK)
+			AssetManager.pauseSound(AssetManager.mainMenuSound);
 		return super.onKeyDown(keyCode, event);
+
 	}
 
 	@Override
@@ -147,6 +171,12 @@ public class MainActivity extends Activity {
 
 	public void showToat(boolean value) {
 		Toast.makeText(this, value + "", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 
 }

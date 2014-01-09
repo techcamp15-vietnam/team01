@@ -5,33 +5,24 @@
     android:orientation="vertical" >
 
     <ImageView
-        android:id="@+id/pause_title_image"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/pause_title" />
-
-    <Button
         android:id="@+id/resume_button"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.25"
-        android:text="Resume" />
+        android:src="@drawable/buttonresume" />
 
-    <Button
+    <ImageView
         android:id="@+id/retry_button"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.25"
-        android:text="Retry" />
+        android:src="@drawable/buttonretry" />
 
-    <Button
+    <ImageView
         android:id="@+id/return_to_main"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.25"
-        android:text="Main Menu" />
+        android:src="@drawable/buttonclose" />
 
-    
 </LinearLayout>

@@ -9,7 +9,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,14 +27,15 @@ public class ResultScreen extends Activity {
 
 	ImageView imgView;
 	ImageView retry;
-//	ImageView mainMenu;
+	// ImageView mainMenu;
 	ImageView btnShare;
 	ImageView btnClose;
 
 	TextView scoreTV;
 	TextView highScore;
+	private Bitmap resultImage;
 
-//	ImageView retryBtn;
+	// ImageView retryBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,21 @@ public class ResultScreen extends Activity {
 		// get intent image
 		byte[] data = getIntent().getByteArrayExtra("image");
 		Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
-		Bitmap rotateImage = rotateImage(image);
-		makeResultImage(rotateImage);
+		resultImage = rotateImage(image, 90);
+
+		int score = getIntent().getIntExtra("score", 0);
+		if (score > getHighScore()) {
+			saveHighScore(score);
+			resultImage = creatHighScoreImage();
+		} else {
+			resultImage = createMedal();
+		}
+		scoreTV = (TextView) findViewById(R.id.tv_score);
+		scoreTV.setText(scoreTV.getText().toString() + " : " + score);
+		highScore = (TextView) findViewById(R.id.high_score);
+		highScore.setText(highScore.getText().toString() + " : "
+				+ getHighScore());
+		makeResultImage(resultImage);
 
 		btnShare = (ImageView) findViewById(R.id.btn_share);
 		btnShare.setOnClickListener(new OnClickListener() {
@@ -53,16 +69,6 @@ public class ResultScreen extends Activity {
 				shareImage();
 			}
 		});
-
-		int score = getIntent().getIntExtra("score", 0);
-		if (score > getHighScore())
-			saveHighScore(score);
-
-		scoreTV = (TextView) findViewById(R.id.tv_score);
-		scoreTV.setText(scoreTV.getText().toString() + " : " + score);
-		highScore = (TextView) findViewById(R.id.high_score);
-		highScore.setText(highScore.getText().toString() + " : "
-				+ getHighScore());
 
 		retry = (ImageView) findViewById(R.id.btn_retry);
 		retry.setOnClickListener(new OnClickListener() {
@@ -85,22 +91,31 @@ public class ResultScreen extends Activity {
 
 			}
 		});
+	}
+
+	private Bitmap createMedal() {
+		Bitmap sBitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.medal);
+		sBitmap = Bitmap.createScaledBitmap(sBitmap, resultImage.getWidth(),
+				resultImage.getHeight(), true);
+		return mergeBitmap(resultImage, sBitmap);
 
 	}
 
-	/**
-	 * RotateImage
-	 * 
-	 * @param Raw
-	 *            Image
-	 * 
-	 * @author 1-C トゥン
-	 */
-	public Bitmap rotateImage(Bitmap inputImage) {
+	private Bitmap creatHighScoreImage() {
+		Bitmap highscoreBitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.highscore);
+		highscoreBitmap = Bitmap.createScaledBitmap(highscoreBitmap,
+				resultImage.getWidth(), resultImage.getHeight(), true);
+
+		return mergeBitmap(resultImage, highscoreBitmap);
+	}
+
+	public Bitmap rotateImage(Bitmap inputImage, int angle) {
 		Bitmap mutableBitmap = inputImage.copy(Bitmap.Config.ARGB_8888, true);
 
 		Matrix matrix = new Matrix();
-		matrix.postRotate(90);
+		matrix.postRotate(angle);
 
 		Bitmap scaledBitmap = Bitmap.createScaledBitmap(mutableBitmap,
 				mutableBitmap.getWidth(), mutableBitmap.getHeight(), true);
@@ -112,6 +127,23 @@ public class ResultScreen extends Activity {
 	}
 
 	/**
+	 * RotateImage
+	 * 
+	 * @param Raw
+	 *            Image
+	 * 
+	 * @author 1-C トゥン
+	 */
+	public Bitmap mergeBitmap(Bitmap bBitmap, Bitmap sBitmap) {
+		Bitmap mergedBitmap = Bitmap.createBitmap(bBitmap.getWidth(),
+				bBitmap.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(mergedBitmap);
+		canvas.drawBitmap(bBitmap, 0, 0, null);
+		canvas.drawBitmap(sBitmap, 0, 0, null);
+		return mergedBitmap;
+	}
+
+	/**
 	 * Make Result Image
 	 * 
 	 * @param rotated
@@ -119,12 +151,13 @@ public class ResultScreen extends Activity {
 	 * 
 	 * @author 1-C トゥン
 	 */
+
 	private void makeResultImage(Bitmap rotatedBitmap) {
 
 		// Bitmap resultImage = mergeBitmap(rotatedBitmap,
 		// AssetManager.splashRaw);
 
-		Bitmap resultImage = rotatedBitmap;
+		// resultImage = rotatedBitmap;
 
 		imgView = (ImageView) findViewById(R.id.img_view);
 		imgView.setImageBitmap(resultImage);

@@ -2,6 +2,7 @@ package com.example.techcampteam01;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Random;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
@@ -26,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,27 +46,24 @@ public class SinglePlayActivity extends Activity {
 	private Camera mCamera;
 	private int numberOfCameras;
 	private int cameraCurrentlyLocked;
+	private int countTimePlay;
 	private List<Face> faces;
 	private Matrix matrix;
 	// The first rear facing camera
 	int defaultCameraId;
 
 	private ImageView tomatoFire;
+	private ImageView startBT;
+	private ImageView timeUpImg;
 	private ImageButton pauseBtn;
 
 	private TextView scoreTV;
 	private TextView timerTV;
 	private TextView highscoreTV;
-	private ImageView startBT;
 
-	private ImageView timeUpImg;
-
-	private int countTimePlay;
-
-	private static final int TIME_PLAY_IN_SECOND = 30000;
+	private static final int TIME_PLAY_IN_SECOND = 5000;
 
 	private Thread timeCounterThread;
-
 	private Handler handler;
 
 	public enum GameState {
@@ -75,6 +73,8 @@ public class SinglePlayActivity extends Activity {
 	private GameState state;
 
 	private int score;
+
+	FruitType tomatoType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +147,64 @@ public class SinglePlayActivity extends Activity {
 
 		score = 0;
 		setScore(score);
+
+		tomatoType = getRandomType();
+
+		setGunnerImage();
+
+	}
+
+	public void setGunnerImage() {
+
+		tomatoFire.setImageBitmap(getBitmapFromType(tomatoType));
+		tomatoType = getRandomType();
+
+	}
+
+	/**
+	 * Get Bitmap base on Tomato'size
+	 * 
+	 * @author ティエップ
+	 * @param type
+	 *            Tomato's type
+	 * @return SplashBitmap
+	 */
+
+	private Bitmap getBitmapFromType(FruitType type) {
+		if (type == FruitType.TOMATO) {
+			return AssetManager.rawbitmap;
+		}
+
+		else if (type == FruitType.APPLE) {
+			return AssetManager.apple;
+		}
+
+		else if (type == FruitType.EGG) {
+
+			return AssetManager.egg;
+		}
+
+		return AssetManager.rawbitmap;
+	}
+
+	public FruitType getFruitType() {
+
+		FruitType fruitType = this.tomatoType;
+		// setGunnerImage();
+		return fruitType;
+	}
+
+	/**
+	 * get Random Tomato's type
+	 * 
+	 * @author ティエップ
+	 * @return Random Type
+	 */
+	private FruitType getRandomType() {
+
+		int rd = new Random().nextInt(FruitType.values().length);
+
+		return FruitType.values()[rd];
 
 	}
 
@@ -262,7 +320,7 @@ public class SinglePlayActivity extends Activity {
 		Intent intent = new Intent(SinglePlayActivity.this, ResultScreen.class);
 		Bitmap image = BitmapFactory.decodeByteArray(imageByte, 0,
 				imageByte.length);
-		image = mergeBitmap(image, AssetManager.splashRaw);
+		image = makeResultBitmap(image, AssetManager.splashRaw);
 		image = Bitmap.createScaledBitmap(image, 250, 250, true);
 
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -285,7 +343,7 @@ public class SinglePlayActivity extends Activity {
 	 * @return
 	 */
 
-	public Bitmap mergeBitmap(Bitmap bBitmap, Bitmap sBitmap) {
+	public Bitmap makeResultBitmap(Bitmap bBitmap, Bitmap sBitmap) {
 		Bitmap mergedBitmap = Bitmap.createBitmap(bBitmap.getWidth(),
 				bBitmap.getHeight(), Config.ARGB_8888);
 		Canvas canvas = new Canvas(mergedBitmap);
@@ -295,7 +353,39 @@ public class SinglePlayActivity extends Activity {
 		canvas.drawBitmap(sBitmap,
 				mergedBitmap.getWidth() / 2 - sBitmap.getWidth() / 2,
 				mergedBitmap.getHeight() / 2 - sBitmap.getHeight() / 2, null);
+
+		sBitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.splash1);
+		sBitmap = Bitmap.createScaledBitmap(sBitmap, bBitmap.getWidth() / 4,
+				bBitmap.getHeight() / 4, true);
+		canvas.drawBitmap(sBitmap,
+				mergedBitmap.getWidth() / 2 + sBitmap.getWidth() / 2,
+				mergedBitmap.getHeight() / 2 + sBitmap.getHeight() / 2, null);
+
+		sBitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.splash2);
+		sBitmap = Bitmap.createScaledBitmap(sBitmap, bBitmap.getWidth() / 4,
+				bBitmap.getHeight() / 4, true);
+		canvas.drawBitmap(sBitmap,
+				mergedBitmap.getWidth() / 2 - sBitmap.getWidth(),
+				mergedBitmap.getHeight() / 2 + sBitmap.getHeight(), null);
+
 		return mergedBitmap;
+	}
+
+	public Bitmap rotateImage(Bitmap inputImage, int angle) {
+		Bitmap mutableBitmap = inputImage.copy(Bitmap.Config.ARGB_8888, true);
+
+		Matrix matrix = new Matrix();
+		matrix.postRotate(angle);
+
+		Bitmap scaledBitmap = Bitmap.createScaledBitmap(mutableBitmap,
+				mutableBitmap.getWidth(), mutableBitmap.getHeight(), true);
+
+		Bitmap rotatedBitmap = Bitmap
+				.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(),
+						scaledBitmap.getHeight(), matrix, true);
+		return rotatedBitmap;
 	}
 
 	/**
@@ -361,7 +451,8 @@ public class SinglePlayActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			Intent intent = new Intent(this, MainActivity.class);
 			startActivity(intent);
@@ -369,7 +460,8 @@ public class SinglePlayActivity extends Activity {
 
 			return true;
 		}
-		return super.onKeyDown(keyCode, event);
+		// return super.onKeyDown(keyCode, event);
+		return false;
 	}
 
 	/**
@@ -378,6 +470,7 @@ public class SinglePlayActivity extends Activity {
 	public void fire() {
 
 		mPreview.assignTomatoToPreview();
+		setGunnerImage();
 
 	}
 
@@ -429,11 +522,11 @@ public class SinglePlayActivity extends Activity {
 					false);
 			dialog.setContentView(dialogView);
 
-			Button resumeBtn = (Button) dialogView
+			ImageView resumeBtn = (ImageView) dialogView
 					.findViewById(R.id.resume_button);
-			Button retryBtn = (Button) dialogView
+			ImageView retryBtn = (ImageView) dialogView
 					.findViewById(R.id.retry_button);
-			Button returnMainBtn = (Button) dialogView
+			ImageView returnMainBtn = (ImageView) dialogView
 					.findViewById(R.id.return_to_main);
 
 			resumeBtn.setOnClickListener(new OnClickListener() {
@@ -476,7 +569,10 @@ public class SinglePlayActivity extends Activity {
 				}
 			});
 
+			dialog.setCancelable(false);
 			dialog.setCanceledOnTouchOutside(false);
+			dialog.getWindow().setBackgroundDrawable(
+					new ColorDrawable(android.graphics.Color.TRANSPARENT));
 			dialog.show();
 
 			return dialog;

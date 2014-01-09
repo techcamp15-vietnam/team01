@@ -10,12 +10,6 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/btn_start"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/guid" />
-
-    <ImageView
         android:id="@+id/tomato_fire"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -23,43 +17,60 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/tomato" />
 
-    <ImageButton
-        android:id="@+id/pause_btn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/pause" />
 
-    <TextView
-        android:id="@+id/text_view_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/time"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="#37FDFC" />
 
-    <TextView
-        android:id="@+id/textview_score"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/score"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="#5DFC0A" />
+        android:background="@android:color/black"
+        android:orientation="horizontal"
+        android:weightSum="9" >
 
-    <TextView
-        android:id="@+id/text_view_highscore"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/textview_score"
-        android:text="@string/highscore"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="#FFEBCD" />
+        <ImageButton
+            android:id="@+id/pause_btn"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="3"
+            android:background="@drawable/pause" />
+
+        <TextView
+            android:id="@+id/text_view_timer"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/time"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textColor="#37FDFC" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textview_score"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="right"
+                android:text="@string/score"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="#5DFC0A" />
+
+            <TextView
+                android:id="@+id/text_view_highscore"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="right"
+                android:text="@string/highscore"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="#FFEBCD" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/timeup_img"
@@ -70,4 +81,10 @@
         android:rotation="45"
         android:src="@drawable/timeup"
         android:visibility="invisible" />
-</RelativeLayout>
+
+        <ImageView
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/guid" />
+</RelativeLayout>
