@@ -25,13 +25,14 @@ public class ResultScreen extends Activity {
 
 	ImageView imgView;
 
-	Button retry;
+	ImageView retry;
 
-	Button mainMenu;
+	ImageView mainMenu;
 
 	TextView scoreTV;
 
-	TextView highScore;   
+	TextView highScore;
+	ImageView btnShare;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class ResultScreen extends Activity {
 		Bitmap rotateImage = rotateImage(image);
 		makeResultImage(rotateImage);
 
-		Button btnShare = (Button) findViewById(R.id.btn_share);
+		btnShare = (ImageView) findViewById(R.id.btn_share);
 		btnShare.setOnClickListener(new OnClickListener() {
 
 			@Override

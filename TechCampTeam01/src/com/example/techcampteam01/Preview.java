@@ -7,7 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -26,7 +27,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class Preview extends SurfaceView implements SurfaceHolder.Callback,
@@ -350,21 +350,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 */
 	private void drawTarget(Canvas canvas) {
 
-		painter.setColor(Color.RED);
-
-		int centerX = getWidth() / 2;
-		int centerY = getHeight() / 2;
-
-		int width = 10;
-		int height = 10;
-
-		targetRect = new Rectangle(centerX - width / 2, centerY - height / 2,
-				width, height);
-
-		canvas.drawRect(new RectF(targetRect.getX(), targetRect.getY(),
-				targetRect.getX() + width, targetRect.getY() + height), painter);
-
-		painter.setColor(Color.RED);
+		Bitmap target = BitmapFactory.decodeResource(getResources(),
+				R.drawable.target);
+		canvas.drawBitmap(target, getWidth() / 2 - target.getWidth() / 2,
+				getHeight() / 2 - target.getHeight() / 2, null);
 
 	}
 
