@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
 		AssetManager.playSound(AssetManager.mainMenuSound);
 	}
 
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

@@ -54,6 +54,7 @@ public class AssetManager {
 		mainMenuSound = MediaPlayer.create(context, R.raw.main_menu_sound);
 	}
 
+	
 	/**
 	 * Dispose resource when don't uses
 	 * 

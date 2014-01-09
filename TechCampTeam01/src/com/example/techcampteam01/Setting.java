@@ -2,6 +2,7 @@ package com.example.techcampteam01;
 
 public class Setting {
 
+	
 	/**
 	 * @author ティエップ
 	 */
