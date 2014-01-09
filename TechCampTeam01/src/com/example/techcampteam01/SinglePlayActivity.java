@@ -128,7 +128,6 @@ public class SinglePlayActivity extends Activity {
 		timeCounterThread = new TimeCounterThread();
 		handler = new Handler();
 
-		// state = GameState.START;
 		setGameState(GameState.START);
 
 		score = 0;
@@ -157,7 +156,6 @@ public class SinglePlayActivity extends Activity {
 		tomatoFire.setEnabled(true);
 		startBT.setVisibility(View.GONE);
 		startTime();
-		// state = GameState.PLAYING;
 		setGameState(GameState.PLAYING);
 
 	}
@@ -244,7 +242,6 @@ public class SinglePlayActivity extends Activity {
 
 							@Override
 							public void run() {
-								// TODO Auto-generated method stub
 								timerTV.setText("Time : " + displayNumber + "");
 
 							}
@@ -317,17 +314,12 @@ public class SinglePlayActivity extends Activity {
 			Rectangle faceRect = new Rectangle(x, y, width, height);
 
 			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
-				// Toast.makeText(SinglePlayActivity.this, "Target Hit",
-				// Toast.LENGTH_SHORT).show();
-
 				score += 1;
 				setScore(score);
 			}
 
 			else {
 
-				// Toast.makeText(SinglePlayActivity.this, "Target Miss",
-				// Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -343,7 +335,6 @@ public class SinglePlayActivity extends Activity {
 
 		// state = GameState.PAUSE;
 		setGameState(GameState.PAUSE);
-		// TODO Auto-generated method stub
 		Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
 				.show();
 		final Dialog dialog = new Dialog(this);
@@ -362,7 +353,6 @@ public class SinglePlayActivity extends Activity {
 			public void onClick(View v) {
 
 				if (state == GameState.PAUSE) {
-					// state = GameState.PLAYING;
 
 					setGameState(GameState.PLAYING);
 
@@ -376,10 +366,8 @@ public class SinglePlayActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(SinglePlayActivity.this
-						.getBaseContext(), SinglePlayActivity.class);
-				startActivity(intent);
-				finish();
+				dialog.dismiss();
+				SinglePlayActivity.this.recreate();
 			}
 		});
 
