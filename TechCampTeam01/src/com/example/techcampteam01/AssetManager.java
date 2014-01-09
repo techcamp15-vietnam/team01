@@ -7,6 +7,7 @@ package com.example.techcampteam01;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 
 public class AssetManager {
@@ -19,7 +20,7 @@ public class AssetManager {
 	public static Bitmap egg;
 	public static Bitmap splash1;
 	public static Bitmap splash2;
-
+	public static MediaPlayer mainMenuSound;
 	MainActivity context;
 
 	public AssetManager(MainActivity context) {
@@ -50,7 +51,7 @@ public class AssetManager {
 				R.drawable.splash1);
 		splash2 = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.splash2);
-
+		mainMenuSound = MediaPlayer.create(context, R.raw.main_menu_sound);
 	}
 
 	/**
@@ -63,14 +64,24 @@ public class AssetManager {
 
 	}
 
-	public synchronized void playSound(boolean isMute, int idSound,
-			MediaPlayer sound, Context context) {
-		if (isMute == false) {
-			if (sound != null) {
-				sound.release();
-				sound = null;
+	public static synchronized void playMusic(MediaPlayer music) {
+
+		if (Setting.musicOn) {
+
+			if (music != null) {
+				music.seekTo(0);
+				music.setLooping(true);
+				music.start();
 			}
-			sound = MediaPlayer.create(context, idSound);
+			Runtime.getRuntime().gc();
+		}
+
+	}
+
+	public static synchronized void playSound(MediaPlayer sound) {
+
+		if (Setting.soundOn) {
+
 			if (sound != null) {
 				sound.seekTo(0);
 				sound.start();
@@ -79,28 +90,28 @@ public class AssetManager {
 		}
 	}
 
-	public void releaseSound(boolean isMute, MediaPlayer sound) {
-		if (isMute == false && sound != null) {
+	public void releaseSound(MediaPlayer sound) {
+		if (sound != null) {
 			sound.release();
 			sound = null;
 		}
 	}
 
-	public void pauseSound(boolean isMute, MediaPlayer sound) {
-		if (isMute == false && sound != null) {
+	public static void pauseSound(MediaPlayer sound) {
+		if (sound != null) {
 			sound.pause();
 		}
 	}
 
-	public void startSound(boolean isMute, MediaPlayer sound) {
-		if (isMute == false && sound != null) {
+	public void startSound(boolean isOn, MediaPlayer sound) {
+		if (isOn == true && sound != null) {
 			sound.start();
 		}
 	}
 
-	public void playLoopSound(int idSound, boolean isMute, MediaPlayer sound,
+	public void playLoopSound(int idSound, boolean isOn, MediaPlayer sound,
 			Context context) {
-		if (isMute == false) {
+		if (isOn == true) {
 			if (sound != null) {
 				sound.release();
 				sound = null;

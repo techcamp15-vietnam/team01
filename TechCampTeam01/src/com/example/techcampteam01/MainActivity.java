@@ -31,12 +31,9 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
-					callSinglePlay();
-				
+				callSinglePlay();
 			}
 		});
-	
 
 		btnOption.setOnClickListener(new OnClickListener() {
 
@@ -59,13 +56,21 @@ public class MainActivity extends Activity {
 
 		assetMN = new AssetManager(this);
 		assetMN.load();
+		playMainMenuSound();
+	}
 
+	private void playMainMenuSound() {
+		// TODO Auto-generated method stub
+		AssetManager.playSound(AssetManager.mainMenuSound);
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if (Setting.musicOn) {
+			playMainMenuSound();
+		}
 		// showToat(Setting.musicOn);
 	}
 
@@ -103,6 +108,7 @@ public class MainActivity extends Activity {
 	private void callSinglePlay() {
 		Intent intent = new Intent(this, SinglePlayActivity.class);
 		// intent.putExtra("ABC", "data");
+		AssetManager.pauseSound(AssetManager.mainMenuSound);
 		startActivity(intent);
 	}
 
@@ -124,9 +130,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Process.killProcess(Process.myPid());
-		}
+		AssetManager.pauseSound(AssetManager.mainMenuSound);
 		return super.onKeyDown(keyCode, event);
 	}
 

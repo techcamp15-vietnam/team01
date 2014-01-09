@@ -31,6 +31,14 @@ public class Setting {
 
 	public static void setMusic(boolean isOn) {
 		musicOn = isOn;
+
+		if (musicOn == true) {
+			AssetManager.playMusic(AssetManager.mainMenuSound);
+		}
+
+		else {
+			AssetManager.pauseSound(AssetManager.mainMenuSound);
+		}
 	}
 
 }
