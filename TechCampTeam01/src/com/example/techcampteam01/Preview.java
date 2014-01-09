@@ -261,18 +261,11 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 
 			rect.set(face.rect);
 			matrix.mapRect(rect);
-			Activity activity = (Activity) getContext();
-			TextView textView = (TextView) activity
-					.findViewById(R.id.text_view);
 
 			int width = (int) rect.width();
 			int height = (int) rect.height();
 			int x = (int) rect.centerX() - width / 2;
 			int y = (int) rect.centerY() - height / 2;
-
-			textView.setText(x + "  " + y + " Width: " + width + "  Height : "
-					+ height + " Target : " + targetRect.getX() + ", "
-					+ targetRect.getY());
 
 			Rectangle faceRect = new Rectangle(x, y, width, height);
 

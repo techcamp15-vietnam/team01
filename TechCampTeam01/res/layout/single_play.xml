@@ -3,15 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:text="ABCFDFD"
-        android:textColor="#000000"
-        android:visibility="gone" />
-
     <FrameLayout
         android:id="@+id/preview"
         android:layout_width="match_parent"
@@ -27,6 +18,52 @@
         android:text="Start" />
 
     <ImageView
+        android:id="@+id/tomato_fire"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/tomato" />
+
+    <ImageButton
+        android:id="@+id/pause_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/pause" />
+
+    <TextView
+        android:id="@+id/text_view_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/time"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#FF000B" />
+
+    <TextView
+        android:id="@+id/textview_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/score"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#5DFC0A" />
+
+    <TextView
+        android:id="@+id/text_view_highscore"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/textview_score"
+        android:text="@string/highscore"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#FFEBCD" />
+
+    <ImageView
         android:id="@+id/timeup_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,47 +72,4 @@
         android:rotation="45"
         android:src="@drawable/timeup"
         android:visibility="invisible" />
-
-    <ImageView
-        android:id="@+id/tomato_fire"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/tomato" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/pause_btn"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/pause" />
-
-        <TextView
-            android:id="@+id/textview_score"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="4"
-            android:text="Score"
-            android:textAlignment="center"
-            android:textColor="#FF000B" />
-
-        <TextView
-            android:id="@+id/text_view_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:text="Timer"
-            android:textAlignment="center"
-            android:textColor="#FF000B" />
-    </LinearLayout>
-
-</RelativeLayout>
+</RelativeLayout>
