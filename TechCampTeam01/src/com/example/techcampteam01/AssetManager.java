@@ -20,6 +20,9 @@ public class AssetManager {
 	public static Bitmap splash1;
 	public static Bitmap splash2;
 	public static MediaPlayer mainMenuSound;
+	public static MediaPlayer soundHit;
+	public static MediaPlayer timeOutSound;
+	public static MediaPlayer timerStopSound;
 	MainActivity context;
 
 	public static Bitmap plusOne, plusThree, plusFive;
@@ -52,7 +55,6 @@ public class AssetManager {
 				R.drawable.splash1);
 		splash2 = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.splash2);
-		mainMenuSound = MediaPlayer.create(context, R.raw.main_menu_sound);
 
 		plusOne = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.plus1);
@@ -60,6 +62,12 @@ public class AssetManager {
 				R.drawable.plus3);
 		plusFive = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.plus5);
+
+		// load game's sound
+		mainMenuSound = MediaPlayer.create(context, R.raw.main_menu_sound);
+		soundHit = MediaPlayer.create(context, R.raw.sound_hit);
+		timeOutSound = MediaPlayer.create(context, R.raw.timer_out);
+		timerStopSound = MediaPlayer.create(context, R.raw.timer_stop);
 	}
 
 	/**

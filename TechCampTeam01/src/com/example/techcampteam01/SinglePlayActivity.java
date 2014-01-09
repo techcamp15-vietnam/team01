@@ -61,7 +61,7 @@ public class SinglePlayActivity extends Activity {
 	private TextView timerTV;
 	private TextView highscoreTV;
 
-	private static final int TIME_PLAY_IN_SECOND = 5000;
+	private static final int TIME_PLAY_IN_SECOND = 10000;
 
 	private Thread timeCounterThread;
 	private Handler handler;
@@ -277,12 +277,14 @@ public class SinglePlayActivity extends Activity {
 						}
 					});
 					tomatoFire.setEnabled(false);
+					AssetManager.playSound(AssetManager.timerStopSound);
 					takePicture();
-
 				}
 			});
 
 		}
+		
+		
 	}
 
 	public GameState getGameState() {
@@ -317,6 +319,8 @@ public class SinglePlayActivity extends Activity {
 	 */
 
 	private void gotoResultScreen(byte[] imageByte) {
+		
+		
 		Intent intent = new Intent(SinglePlayActivity.this, ResultScreen.class);
 		Bitmap image = BitmapFactory.decodeByteArray(imageByte, 0,
 				imageByte.length);
@@ -417,7 +421,11 @@ public class SinglePlayActivity extends Activity {
 								timerTV.setText("Time : " + displayNumber + "");
 							}
 						});
-
+						if (displayNumber == 5 || displayNumber == 4
+								|| displayNumber == 3 || displayNumber == 2
+								|| displayNumber == 1 || displayNumber == 0) {
+							AssetManager.playSound(AssetManager.timeOutSound);
+						}
 					}
 
 				} catch (InterruptedException e) {
@@ -501,7 +509,7 @@ public class SinglePlayActivity extends Activity {
 	public void pause() {
 
 		setGameState(GameState.PAUSE);
-
+		AssetManager.pauseSound(AssetManager.timeOutSound);
 		showDialog(0);
 
 	}
@@ -537,7 +545,9 @@ public class SinglePlayActivity extends Activity {
 					if (state == GameState.PAUSE) {
 
 						setGameState(GameState.PLAYING);
-
+						if (countTimePlay <= 5000){
+							AssetManager.playSound(AssetManager.timeOutSound);
+						}
 					}
 					dialog.dismiss();
 				}

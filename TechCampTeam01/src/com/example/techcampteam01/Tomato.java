@@ -246,6 +246,7 @@ public class Tomato {
 					drawSplashTime = 500;
 					splash.draw(canvas);
 
+					AssetManager.playSound(AssetManager.soundHit);
 					return;
 
 				}
