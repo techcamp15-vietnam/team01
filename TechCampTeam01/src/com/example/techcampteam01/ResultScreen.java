@@ -9,14 +9,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -34,6 +33,10 @@ public class ResultScreen extends Activity {
 
 	TextView highScore;
 	ImageView btnShare;
+
+	ImageView btnClose;
+
+	ImageView retryBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,28 @@ public class ResultScreen extends Activity {
 		highScore = (TextView) findViewById(R.id.high_score);
 		highScore.setText(highScore.getText().toString() + " : "
 				+ getHighScore());
+
+		retry = (ImageView) findViewById(R.id.btn_retry);
+		retry.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				retry();
+
+			}
+		});
+
+		btnClose = (ImageView) findViewById(R.id.btn_mainmenu);
+		btnClose.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				gotoMenu();
+
+			}
+		});
 
 	}
 
@@ -100,7 +125,10 @@ public class ResultScreen extends Activity {
 	 */
 	private void makeResultImage(Bitmap rotatedBitmap) {
 
-		Bitmap resultImage = mergeBitmap(rotatedBitmap, AssetManager.splashRaw);
+		// Bitmap resultImage = mergeBitmap(rotatedBitmap,
+		// AssetManager.splashRaw);
+
+		Bitmap resultImage = rotatedBitmap;
 
 		imgView = (ImageView) findViewById(R.id.img_view);
 		imgView.setImageBitmap(resultImage);
@@ -130,27 +158,6 @@ public class ResultScreen extends Activity {
 	}
 
 	/**
-	 * @author ドゥック Merge two Bitmaps
-	 * 
-	 * @param bBitmap
-	 *            Bitmap 1
-	 * @param sBitmap
-	 *            Bitmap 2
-	 * @return
-	 */
-
-	public Bitmap mergeBitmap(Bitmap bBitmap, Bitmap sBitmap) {
-		Bitmap mergedBitmap = Bitmap.createBitmap(bBitmap.getWidth(),
-				bBitmap.getHeight(), Config.ARGB_8888);
-		Canvas canvas = new Canvas(mergedBitmap);
-		canvas.drawBitmap(bBitmap, 0, 0, null);
-		canvas.drawBitmap(sBitmap,
-				mergedBitmap.getWidth() / 2 - sBitmap.getWidth() / 2,
-				mergedBitmap.getHeight() / 2 - sBitmap.getHeight() / 2, null);
-		return mergedBitmap;
-	}
-
-	/**
 	 * Post Result Image to FB
 	 * 
 	 * @param imageName
@@ -177,7 +184,9 @@ public class ResultScreen extends Activity {
 	}
 
 	/**
-	 * @author TiepDV
+	 * 　Save HighScore
+	 * 
+	 * @author ティエップ
 	 * @param highScore
 	 */
 
@@ -193,7 +202,9 @@ public class ResultScreen extends Activity {
 	}
 
 	/**
-	 * @author TiepDV
+	 * Get Saved HighScore
+	 * 
+	 * @author ティエップ
 	 * @param highScore
 	 * @return
 	 */
@@ -207,6 +218,46 @@ public class ResultScreen extends Activity {
 		int saveHighScore = 0;
 		saveHighScore = appPref.getInt("highscore", 0);
 		return saveHighScore;
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			gotoMenu();
+			return true;
+
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * Retry
+	 * 
+	 * @author ティエップ
+	 * 
+	 */
+
+	private void retry() {
+
+		Intent intent = new Intent(this, SinglePlayActivity.class);
+		startActivity(intent);
+
+	}
+
+	/**
+	 * Goto Main Menu
+	 * 
+	 * @author ティエップ
+	 * 
+	 */
+
+	private void gotoMenu() {
+
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+
 	}
 
 }

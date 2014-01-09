@@ -7,7 +7,6 @@ package com.example.techcampteam01;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 
 public class AssetManager {
@@ -22,6 +21,8 @@ public class AssetManager {
 	public static Bitmap splash2;
 	public static MediaPlayer mainMenuSound;
 	MainActivity context;
+
+	public static Bitmap plusOne, plusThree, plusFive;
 
 	public AssetManager(MainActivity context) {
 
@@ -52,9 +53,15 @@ public class AssetManager {
 		splash2 = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.splash2);
 		mainMenuSound = MediaPlayer.create(context, R.raw.main_menu_sound);
+
+		plusOne = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.plus1);
+		plusThree = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.plus3);
+		plusFive = BitmapFactory.decodeResource(context.getResources(),
+				R.drawable.plus5);
 	}
 
-	
 	/**
 	 * Dispose resource when don't uses
 	 * 

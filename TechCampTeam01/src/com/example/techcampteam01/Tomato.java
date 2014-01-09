@@ -49,11 +49,23 @@ public class Tomato {
 
 	// boolean isAlive;
 
+	int alphaCount;
+
+	boolean splashPlusStart;
+
+	boolean splashPlusDone;
+
+	int drawSplashPlusTime;
+
+	int delayTime;
+
 	public enum FruitType {
 		TOMATO, APPLE, EGG
 	}
 
 	private FruitType fruitType;
+	private int splashPlusY;
+	private int splashPlusX;
 
 	public Tomato(Preview parent) {
 
@@ -87,7 +99,20 @@ public class Tomato {
 
 		splashDone = false;
 
+		alphaCount = 100;
+
+		splashPlusStart = false;
+
+		splashPlusDone = false;
+
 		// isAlive = true;
+
+		drawSplashTime = 3000;
+
+		splashPlusX = (int) (parent.getWidth() * 0.75);
+		splashPlusY = (int) (parent.getHeight() * 0.25);
+
+		delayTime = 10;
 
 	}
 
@@ -182,6 +207,19 @@ public class Tomato {
 		// if (!isAlive)
 		// return;
 
+		if (splashPlusStart && !splashPlusDone) {
+
+			drawPlusPoint(fruitType, canvas);
+
+			new SleepThreadPlus().start();
+
+			if (drawSplashPlusTime <= 0) {
+				// splashPlusDone = true;
+
+			}
+
+		}
+
 		if (splashDone) {
 			// removeFromListHolder();
 			return;
@@ -197,8 +235,13 @@ public class Tomato {
 				if (parent.haveFaceInCenter()) {
 
 					startFlash = true;
+					splashPlusStart = true;
+					SinglePlayActivity context = (SinglePlayActivity) parent
+							.getContext();
+					context.plusScore(fruitType);
 					drawSplashTime = 500;
 					splash.draw(canvas);
+
 					return;
 
 				}
@@ -249,6 +292,66 @@ public class Tomato {
 		}
 
 	}
+	
+	/**
+	 * @author Duc
+	 * @param fruitType
+	 * @param canvas
+	 */
+
+	private void drawPlusPoint(FruitType fruitType, Canvas canvas) {
+		// TODO Auto-generated method stub
+		Paint paint = new Paint();
+		if (alphaCount > 0) {
+			paint.setAlpha(alphaCount);
+			delayTime -= 1;
+			if (delayTime <= 0) {
+				alphaCount = alphaCount - 1;
+				delayTime = 10;
+			}
+
+			switch (fruitType) {
+			case EGG:
+				canvas.drawBitmap(AssetManager.plusOne, splashPlusX,
+						splashPlusY, paint);
+				break;
+			case APPLE:
+				canvas.drawBitmap(AssetManager.plusThree, splashPlusX,
+						splashPlusY, paint);
+				break;
+			case TOMATO:
+				canvas.drawBitmap(AssetManager.plusFive, splashPlusX,
+						splashPlusY, paint);
+				break;
+			default:
+				break;
+			}
+			moveThePoint(fruitType);
+		}
+	}
+	/**
+	 * @author Duc
+	 * @param fruitType
+	 */
+
+	protected void moveThePoint(FruitType fruitType) {
+		switch (fruitType) {
+		case EGG:
+			splashPlusX = splashPlusX + 2;
+			splashPlusY = splashPlusY + 2;
+			break;
+		case APPLE:
+			splashPlusX = splashPlusX - 2;
+			break;
+		case TOMATO:
+			splashPlusX = splashPlusX + 2;
+			splashPlusY = splashPlusY - 2;
+			break;
+		default:
+			break;
+		}
+		parent.invalidate();
+	}
 
 	/**
 	 * @author ミン・ドゥック
@@ -270,6 +373,24 @@ public class Tomato {
 	private void removeFromListHolder() {
 		List<Tomato> listHolder = ((Preview) parent).getListHolder();
 		listHolder.remove(this);
+	}
+
+	class SleepThreadPlus extends Thread {
+
+		@Override
+		public void run() {
+
+			try {
+				Thread.sleep(100);
+				drawSplashPlusTime -= 100;
+
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 	class SleepThread extends Thread {

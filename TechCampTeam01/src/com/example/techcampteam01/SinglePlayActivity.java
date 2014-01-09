@@ -1,15 +1,18 @@
 package com.example.techcampteam01;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
-import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Face;
@@ -27,6 +30,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.techcampteam01.Tomato.FruitType;
 
 @SuppressLint("NewApi")
 public class SinglePlayActivity extends Activity {
@@ -227,11 +232,43 @@ public class SinglePlayActivity extends Activity {
 	 */
 
 	private void gotoResultScreen(byte[] imageByte) {
-		Intent intent = new Intent(this, ResultScreen.class);
+		Intent intent = new Intent(SinglePlayActivity.this, ResultScreen.class);
+		Bitmap image = BitmapFactory.decodeByteArray(imageByte, 0,
+				imageByte.length);
+		image = mergeBitmap(image, AssetManager.splashRaw);
+		image = Bitmap.createScaledBitmap(image, 250, 250, true);
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		byte[] byteArray = stream.toByteArray();
+
 		intent.putExtra("score", score);
-		intent.putExtra("image", imageByte);
-		SinglePlayActivity.this.startActivity(intent);
-		SinglePlayActivity.this.finish();
+		intent.putExtra("image", byteArray);
+		startActivity(intent);
+		finish();
+	}
+
+	/**
+	 * @author ドゥック Merge two Bitmaps
+	 * 
+	 * @param bBitmap
+	 *            Bitmap 1
+	 * @param sBitmap
+	 *            Bitmap 2
+	 * @return
+	 */
+
+	public Bitmap mergeBitmap(Bitmap bBitmap, Bitmap sBitmap) {
+		Bitmap mergedBitmap = Bitmap.createBitmap(bBitmap.getWidth(),
+				bBitmap.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(mergedBitmap);
+		sBitmap = Bitmap.createScaledBitmap(sBitmap, bBitmap.getWidth() / 4,
+				bBitmap.getHeight() / 4, true);
+		canvas.drawBitmap(bBitmap, 0, 0, null);
+		canvas.drawBitmap(sBitmap,
+				mergedBitmap.getWidth() / 2 - sBitmap.getWidth() / 2,
+				mergedBitmap.getHeight() / 2 - sBitmap.getHeight() / 2, null);
+		return mergedBitmap;
 	}
 
 	/**
@@ -298,7 +335,12 @@ public class SinglePlayActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
 			finish();
+
+			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -310,35 +352,23 @@ public class SinglePlayActivity extends Activity {
 
 		mPreview.assignTomatoToPreview();
 
-		faces = mPreview.getFaces();
-		RectF rect = new RectF();
-		int centerX = mPreview.getWidth() / 2;
-		int centerY = mPreview.getHeight() / 2;
+	}
 
-		Preview.prepareMatrix(matrix, 90, mPreview.getWidth(),
-				mPreview.getHeight());
-		for (int i = 0; i < faces.size(); i++)
+	public void plusScore(FruitType type) {
 
-		{
-			Face face = faces.get(i);
-			rect.set(face.rect);
-			matrix.mapRect(rect);
-			int width = (int) rect.width();
-			int height = (int) rect.height();
-			int x = (int) rect.centerX() - width / 2;
-			int y = (int) rect.centerY() - height / 2;
-
-			Rectangle faceRect = new Rectangle(x, y, width, height);
-
-			if (faceRect.checkPointInRectangle(new Point(centerX, centerY))) {
-				score += 1;
-				setScore(score);
-			}
-
-			else {
-
-			}
+		if (type == FruitType.EGG) {
+			score += 1;
 		}
+
+		else if (type == FruitType.APPLE) {
+			score += 3;
+		}
+
+		else {
+			score += 5;
+		}
+
+		setScore(score);
 	}
 
 	/**
@@ -350,56 +380,84 @@ public class SinglePlayActivity extends Activity {
 
 	public void pause() {
 
-		// state = GameState.PAUSE;
 		setGameState(GameState.PAUSE);
-		Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
-				.show();
-		final Dialog dialog = new Dialog(this);
-		LayoutInflater inflater = LayoutInflater.from(SinglePlayActivity.this);
-		View dialogView = inflater.inflate(R.layout.pause_dialog, null, false);
-		dialog.setContentView(dialogView);
 
-		Button resumeBtn = (Button) dialogView.findViewById(R.id.resume_button);
-		Button retryBtn = (Button) dialogView.findViewById(R.id.retry_button);
-		Button returnMainBtn = (Button) dialogView
-				.findViewById(R.id.return_to_main);
+		showDialog(0);
 
-		resumeBtn.setOnClickListener(new OnClickListener() {
+	}
 
-			@Override
-			public void onClick(View v) {
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id) {
 
-				if (state == GameState.PAUSE) {
+		if (id == 0) {
 
-					setGameState(GameState.PLAYING);
+			setGameState(GameState.PAUSE);
+			Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
+					.show();
+			final Dialog dialog = new Dialog(this);
+			LayoutInflater inflater = LayoutInflater
+					.from(SinglePlayActivity.this);
+			View dialogView = inflater.inflate(R.layout.pause_dialog, null,
+					false);
+			dialog.setContentView(dialogView);
 
+			Button resumeBtn = (Button) dialogView
+					.findViewById(R.id.resume_button);
+			Button retryBtn = (Button) dialogView
+					.findViewById(R.id.retry_button);
+			Button returnMainBtn = (Button) dialogView
+					.findViewById(R.id.return_to_main);
+
+			resumeBtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					if (state == GameState.PAUSE) {
+
+						setGameState(GameState.PLAYING);
+
+					}
+					dialog.dismiss();
 				}
-				dialog.dismiss();
-			}
-		});
+			});
 
-		retryBtn.setOnClickListener(new OnClickListener() {
+			retryBtn.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-				SinglePlayActivity.this.recreate();
-			}
-		});
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+					Intent intent = new Intent(SinglePlayActivity.this,
+							SinglePlayActivity.class);
+					startActivity(intent);
+					finish();
+				}
+			});
 
-		returnMainBtn.setOnClickListener(new OnClickListener() {
+			returnMainBtn.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
 
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.show();
+					Intent intent = new Intent(getBaseContext(),
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
+			});
 
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
+
+			return dialog;
+
+		}
+
+		else
+			return super.onCreateDialog(id);
 	}
 
 	@Override
