@@ -24,19 +24,15 @@ import android.widget.TextView;
 public class ResultScreen extends Activity {
 
 	ImageView imgView;
-
 	ImageView retry;
-
-	ImageView mainMenu;
-
-	TextView scoreTV;
-
-	TextView highScore;
+//	ImageView mainMenu;
 	ImageView btnShare;
-
 	ImageView btnClose;
 
-	ImageView retryBtn;
+	TextView scoreTV;
+	TextView highScore;
+
+//	ImageView retryBtn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

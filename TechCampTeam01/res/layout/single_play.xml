@@ -9,13 +9,11 @@
         android:layout_height="match_parent" >
     </FrameLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Start" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/guid" />
 
     <ImageView
         android:id="@+id/tomato_fire"

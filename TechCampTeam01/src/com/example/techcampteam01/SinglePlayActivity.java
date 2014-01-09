@@ -54,7 +54,7 @@ public class SinglePlayActivity extends Activity {
 	private TextView scoreTV;
 	private TextView timerTV;
 	private TextView highscoreTV;
-	private Button startBT;
+	private ImageView startBT;
 
 	private ImageView timeUpImg;
 
@@ -100,7 +100,7 @@ public class SinglePlayActivity extends Activity {
 		scoreTV = (TextView) findViewById(R.id.textview_score);
 		timerTV = (TextView) findViewById(R.id.text_view_timer);
 		highscoreTV = (TextView) findViewById(R.id.text_view_highscore);
-		startBT = (Button) findViewById(R.id.btn_start);
+		startBT = (ImageView) findViewById(R.id.btn_start);
 		timeUpImg = (ImageView) findViewById(R.id.timeup_img);
 
 		tomatoFire.setEnabled(false);
