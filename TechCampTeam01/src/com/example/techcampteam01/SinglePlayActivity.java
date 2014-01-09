@@ -253,12 +253,11 @@ public class SinglePlayActivity extends Activity {
 						countTimePlay -= 500;
 						final int displayNumber = (int) (countTimePlay / 1000);
 
-						
 						handler.post(new Runnable() {
 
 							@Override
 							public void run() {
-								if(displayNumber <= 5){
+								if (displayNumber <= 5) {
 									timerTV.setTextColor(Color.RED);
 								}
 								timerTV.setText("Time : " + displayNumber + "");
@@ -415,8 +414,9 @@ public class SinglePlayActivity extends Activity {
 		super.onPause();
 		// Because the Camera object is a shared resource, it's very
 		// important to release it when the activity is paused.
-		
-		pause();
+
+		if (state == GameState.PLAYING)
+			pause();
 
 		if (mCamera != null) {
 			mPreview.setCamera(null);

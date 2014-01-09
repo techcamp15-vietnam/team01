@@ -7,9 +7,13 @@
     <string name="share">Share</string>
     <string name="your_name">Your Name</string>
     <string name="default_name">TDT</string>
-     <string name="app_id">1381685488756667</string>
-     <string name="score">Score</string>
-     <string name="time">Time</string>
-     <string name="highscore">Highscore</string>
-     <string name="start">Start</string>
+    <string name="app_id">1381685488756667</string>
+    <string name="score">Score</string>
+    <string name="time">Time</string>
+    <string name="highscore">Highscore</string>
+    <string name="start">Start</string>
+    <string name="retry">Retry</string>
+    <string name="mainmenu">Main menu</string>
+    <string name="resume">Resume</string>
+
 </resources>

@@ -81,7 +81,7 @@ public class Tomato {
 		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
 
-		splash = new SplashTomato(parent,splashRaw);
+		splash = new SplashTomato(parent, splashRaw);
 
 		startFlash = false;
 
@@ -90,6 +90,15 @@ public class Tomato {
 		// isAlive = true;
 
 	}
+
+	/**
+	 * Get Bitmap base on Tomato'size
+	 * 
+	 * @author ティエップ
+	 * @param type
+	 *            Tomato's type
+	 * @return SplashBitmap
+	 */
 
 	private Bitmap getBitmapFromType(FruitType type) {
 		if (type == FruitType.TOMATO) {
@@ -108,6 +117,14 @@ public class Tomato {
 		return AssetManager.rawbitmap;
 	}
 
+	/**
+	 * Get Splash from Tomato'size
+	 * 
+	 * @author ティエップ
+	 * @param type
+	 *            Tomato's type
+	 * @return Splash Bitmap
+	 */
 	private Bitmap getSplashFromType(FruitType type) {
 
 		if (type == FruitType.TOMATO) {
@@ -127,6 +144,12 @@ public class Tomato {
 
 	}
 
+	/**
+	 * get Random Tomato's type
+	 * 
+	 * @author ティエップ
+	 * @return Random Type
+	 */
 	private FruitType getRandomType() {
 
 		int rd = new Random().nextInt(FruitType.values().length);
@@ -135,12 +158,21 @@ public class Tomato {
 
 	}
 
+	/**
+	 * Get current Tomato's type
+	 * 
+	 * @author ティエップ
+	 * @return tomato's type
+	 */
+
 	public FruitType getFruitType() {
 		return this.fruitType;
 	}
 
 	/**
 	 * Draw tomato animation onto the screen
+	 * 
+	 * @author ティエップ
 	 * 
 	 * @param canvas
 	 *            canvas from parent container
