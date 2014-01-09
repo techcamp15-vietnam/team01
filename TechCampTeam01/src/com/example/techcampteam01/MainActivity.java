@@ -12,9 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.facebook.Session;
-import com.facebook.SessionState;
-
 public class MainActivity extends Activity {
 	ImageView btnStart, btnOption, btnExit;
 	private AssetManager assetMN;
@@ -84,10 +81,12 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		showToat(Setting.musicOn);
+		// showToat(Setting.musicOn);
 	}
-	
-	/**Go to Setting Screen
+
+	/**
+	 * Go to Setting Screen
+	 * 
 	 * @author ティエップ
 	 */
 
