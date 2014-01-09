@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	ImageView btnStart, btnOption, btnExit;
@@ -55,6 +54,8 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		gotoSetting = false;
+
 		assetMN = new AssetManager(this);
 		assetMN.load();
 
@@ -95,7 +96,6 @@ public class MainActivity extends Activity {
 		} else {
 			AssetManager.playMusic(AssetManager.mainMenuSound);
 		}
-		showToat(Setting.musicOn);
 	}
 
 	/**
@@ -104,7 +104,11 @@ public class MainActivity extends Activity {
 	 * @author ティエップ
 	 */
 
+	boolean gotoSetting;
+
 	protected void gotoSetting() {
+
+		gotoSetting = true;
 
 		Intent intent = new Intent(this, SettingScreen.class);
 		startActivity(intent);
@@ -163,20 +167,29 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
+	protected void onUserLeaveHint() {
+		// TODO Auto-generated method stub
+		super.onUserLeaveHint();
+		AssetManager.pauseSound(AssetManager.mainMenuSound);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
-	public void showToat(boolean value) {
-		Toast.makeText(this, value + "", Toast.LENGTH_SHORT).show();
-	}
-
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+
+		// if (!gotoSetting) {
+		// AssetManager.pauseSound(AssetManager.mainMenuSound);
+		// gotoSetting = false;
+		//
+		// }
 	}
 
 }
