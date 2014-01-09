@@ -49,6 +49,8 @@ public class SinglePlayActivity extends Activity {
 	private TextView timerTV;
 	private Button startBT;
 
+	private ImageView timeUpImg;
+
 	private int countTimePlay;
 
 	private static final int TIME_PLAY_IN_SECOND = 30000;
@@ -91,6 +93,7 @@ public class SinglePlayActivity extends Activity {
 		scoreTV = (TextView) findViewById(R.id.textview_score);
 		timerTV = (TextView) findViewById(R.id.text_view_timer);
 		startBT = (Button) findViewById(R.id.btn_start);
+		timeUpImg = (ImageView) findViewById(R.id.timeup_img);
 
 		tomatoFire.setEnabled(false);
 
@@ -176,6 +179,16 @@ public class SinglePlayActivity extends Activity {
 				@Override
 				public void run() {
 
+					timeUpImg.setVisibility(View.VISIBLE);
+					handler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							
+
+						}
+					});
+					tomatoFire.setEnabled(false);
 					takePicture();
 
 				}

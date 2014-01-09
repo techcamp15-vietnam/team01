@@ -21,8 +21,8 @@ public class SplashTomato {
 	Bitmap splashRaw;
 	Paint painter;
 
-	public SplashTomato(View parent2) {
-		splashRaw = AssetManager.splashRaw;
+	public SplashTomato(View parent2, Bitmap splash) {
+		splashRaw = splash;
 		x = 0;
 		y = 0;
 		this.parent = (Preview) parent2;

@@ -1,6 +1,7 @@
 package com.example.techcampteam01;
 
 import java.util.List;
+import java.util.Random;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -48,6 +49,12 @@ public class Tomato {
 
 	// boolean isAlive;
 
+	public enum FruitType {
+		TOMATO, APPLE, EGG
+	}
+
+	private FruitType fruitType;
+
 	public Tomato(Preview parent) {
 
 		this.parent = parent;
@@ -65,14 +72,16 @@ public class Tomato {
 		velosityX = parent.getWidth() / 30;
 		velosityY = parent.getHeight() / 30 + 3;
 
-		rawbitmap = AssetManager.rawbitmap;
+		fruitType = getRandomType();
 
-		splashRaw = AssetManager.splashRaw;
+		rawbitmap = getBitmapFromType(fruitType);
+
+		splashRaw = getSplashFromType(fruitType);
 
 		scaledBitmap = Bitmap.createScaledBitmap(rawbitmap, currentTomtatoSize,
 				currentTomtatoSize, true);
 
-		splash = new SplashTomato(parent);
+		splash = new SplashTomato(parent,splashRaw);
 
 		startFlash = false;
 
@@ -80,6 +89,54 @@ public class Tomato {
 
 		// isAlive = true;
 
+	}
+
+	private Bitmap getBitmapFromType(FruitType type) {
+		if (type == FruitType.TOMATO) {
+			return AssetManager.rawbitmap;
+		}
+
+		else if (type == FruitType.APPLE) {
+			return AssetManager.apple;
+		}
+
+		else if (type == FruitType.EGG) {
+
+			return AssetManager.egg;
+		}
+
+		return AssetManager.rawbitmap;
+	}
+
+	private Bitmap getSplashFromType(FruitType type) {
+
+		if (type == FruitType.TOMATO) {
+			return AssetManager.splashRaw;
+		}
+
+		else if (type == FruitType.APPLE) {
+			return AssetManager.splash1;
+		}
+
+		else if (type == FruitType.EGG) {
+
+			return AssetManager.splash2;
+		}
+
+		return AssetManager.splashRaw;
+
+	}
+
+	private FruitType getRandomType() {
+
+		int rd = new Random().nextInt(FruitType.values().length);
+
+		return FruitType.values()[rd];
+
+	}
+
+	public FruitType getFruitType() {
+		return this.fruitType;
 	}
 
 	/**
@@ -138,12 +195,6 @@ public class Tomato {
 					// isAlive = false;
 
 				}
-			}
-
-			if (!startFlash)
-
-			{
-
 			}
 
 		}
