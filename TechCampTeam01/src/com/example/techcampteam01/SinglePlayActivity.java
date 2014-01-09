@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.hardware.Camera.Face;
 import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -135,6 +137,8 @@ public class SinglePlayActivity extends Activity {
 		countTimePlay = TIME_PLAY_IN_SECOND;
 
 		timerTV.setText("Time : " + countTimePlay / 1000 + "");
+		highscoreTV.setText(highscoreTV.getText().toString() + " : "
+				+ getHighScore());
 
 		timeCounterThread = new TimeCounterThread();
 		handler = new Handler();
@@ -144,6 +148,25 @@ public class SinglePlayActivity extends Activity {
 		score = 0;
 		setScore(score);
 
+	}
+
+	/**
+	 * Get Saved HighScore
+	 * 
+	 * @author ティエップ
+	 * @param highScore
+	 * @return
+	 */
+
+	public int getHighScore() {
+		//
+
+		SharedPreferences appPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		int saveHighScore = 0;
+		saveHighScore = appPref.getInt("highscore", 0);
+		return saveHighScore;
 	}
 
 	/**
@@ -177,7 +200,7 @@ public class SinglePlayActivity extends Activity {
 	 *            game's state
 	 */
 
-	private void setGameState(GameState state) {
+	public void setGameState(GameState state) {
 		this.state = state;
 		if (this.state == GameState.STOP)
 
@@ -202,6 +225,10 @@ public class SinglePlayActivity extends Activity {
 			});
 
 		}
+	}
+
+	public GameState getGameState() {
+		return this.state;
 	}
 
 	/**

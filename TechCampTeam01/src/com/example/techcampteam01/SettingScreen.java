@@ -1,20 +1,23 @@
 package com.example.techcampteam01;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 public class SettingScreen extends Activity {
-	
+
 	/**
 	 * @author ティエップ
 	 */
 
 	CheckBox musicCB;
 	CheckBox soundCB;
+
+	ImageView btnBack;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class SettingScreen extends Activity {
 
 		musicCB.setText("Music");
 		soundCB.setText("Sound");
-		
+
 		musicCB.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -54,6 +57,31 @@ public class SettingScreen extends Activity {
 
 			}
 		});
+
+		btnBack = (ImageView) findViewById(R.id.btnBack);
+		btnBack.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				gotoMainMenu();
+
+			}
+		});
+
+	}
+
+	/**
+	 * Go to main menu
+	 * 
+	 * @author ティエップ
+	 */
+
+	private void gotoMainMenu() {
+
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
 
 	}
 

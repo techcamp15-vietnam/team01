@@ -8,6 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.techcampteam01.SinglePlayActivity.GameState;
+
 public class Tomato {
 	/**
 	 * Tomato object
@@ -248,13 +250,18 @@ public class Tomato {
 
 				canvas.drawBitmap(scaledBitmap, x, y, bPaint);
 
-				x -= velosityX;
-				y -= velosityY;
+				SinglePlayActivity context = (SinglePlayActivity) parent
+						.getContext();
+				if (context.getGameState() == GameState.PLAYING) {
+					x -= velosityX;
+					y -= velosityY;
+					currentTomtatoSize -= 2;
+					if (currentTomtatoSize > 0)
+						scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
+								currentTomtatoSize, currentTomtatoSize, true);
 
-				currentTomtatoSize -= 2;
-				if (currentTomtatoSize > 0)
-					scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
-							currentTomtatoSize, currentTomtatoSize, true);
+				}
+
 			}
 
 			else {
@@ -281,18 +288,25 @@ public class Tomato {
 
 			canvas.drawBitmap(scaledBitmap, x, y, bPaint);
 
-			x -= velosityX;
-			y -= velosityY;
+			SinglePlayActivity context = (SinglePlayActivity) parent
+					.getContext();
 
-			currentTomtatoSize -= 2;
-			if (currentTomtatoSize > 0)
-				scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
-						currentTomtatoSize, currentTomtatoSize, true);
+			if (context.getGameState() == GameState.PLAYING) {
+
+				x -= velosityX;
+				y -= velosityY;
+
+				currentTomtatoSize -= 2;
+				if (currentTomtatoSize > 0)
+					scaledBitmap = Bitmap.createScaledBitmap(rawbitmap,
+							currentTomtatoSize, currentTomtatoSize, true);
+			}
+
 
 		}
 
 	}
-	
+
 	/**
 	 * @author Duc
 	 * @param fruitType
@@ -329,6 +343,7 @@ public class Tomato {
 			moveThePoint(fruitType);
 		}
 	}
+
 	/**
 	 * @author Duc
 	 * @param fruitType

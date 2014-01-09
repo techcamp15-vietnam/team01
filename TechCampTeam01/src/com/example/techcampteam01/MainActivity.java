@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -56,6 +55,7 @@ public class MainActivity extends Activity {
 
 		assetMN = new AssetManager(this);
 		assetMN.load();
+
 		playMainMenuSound();
 	}
 
@@ -64,13 +64,15 @@ public class MainActivity extends Activity {
 		AssetManager.playSound(AssetManager.mainMenuSound);
 	}
 
-	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if (Setting.musicOn) {
-			playMainMenuSound();
+		if (!Setting.musicOn) {
+
+			AssetManager.pauseSound(AssetManager.mainMenuSound);
+		} else {
+			AssetManager.playMusic(AssetManager.mainMenuSound);
 		}
 		// showToat(Setting.musicOn);
 	}
@@ -85,6 +87,7 @@ public class MainActivity extends Activity {
 
 		Intent intent = new Intent(this, SettingScreen.class);
 		startActivity(intent);
+		// finish();
 
 	}
 
