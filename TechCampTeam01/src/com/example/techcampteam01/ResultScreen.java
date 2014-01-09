@@ -199,6 +199,7 @@ public class ResultScreen extends Activity {
 	 */
 
 	public int getHighScore() {
+		//
 
 		SharedPreferences appPref = PreferenceManager
 				.getDefaultSharedPreferences(this);

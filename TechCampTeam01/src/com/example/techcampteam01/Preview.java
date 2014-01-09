@@ -79,6 +79,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 		listTomatoOnScreen = new ArrayList<Tomato>();
 
 		haveFaceInCenter = false;
+		//
 
 	}
 
