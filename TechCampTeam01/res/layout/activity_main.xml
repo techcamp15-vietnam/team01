@@ -1,58 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#46b035"
+    android:background="@drawable/bg"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:gravity="center"
     android:orientation="vertical" >
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/logo" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/your_name" />
-
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:lines="1"
-            android:text="@string/default_name" />
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/btnstart" />
+        android:layout_alignBottom="@+id/btnOption"
+        android:layout_marginBottom="59dp"
+        android:layout_toRightOf="@+id/btnOption"
+        android:src="@drawable/buttonstart" />
 
     <ImageView
         android:id="@+id/btnOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/btnoption" />
+        android:layout_above="@+id/btnExit"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="26dp"
+        android:src="@drawable/buttonoption" />
 
     <ImageView
         android:id="@+id/btnExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/btnexit" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btnStart"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="26dp"
+        android:src="@drawable/buttonexit" />
 
-</LinearLayout>
+</RelativeLayout>

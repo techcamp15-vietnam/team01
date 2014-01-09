@@ -26,32 +26,17 @@ public class MainActivity extends Activity {
 		btnStart = (ImageView) findViewById(R.id.btnStart);
 		btnOption = (ImageView) findViewById(R.id.btnOption);
 		btnExit = (ImageView) findViewById(R.id.btnExit);
-		final EditText name = (EditText) findViewById(R.id.name);
 
 		btnStart.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (name.getText().toString().equals("")) {
-					Toast.makeText(getBaseContext(), "Please Enter Your Name",
-							Toast.LENGTH_SHORT).show();
-				} else {
+				
 					callSinglePlay();
-				}
+				
 			}
 		});
-		btnOption.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (name.getText().toString().equals("")) {
-					Toast.makeText(getBaseContext(), "Please Enter Your Name",
-							Toast.LENGTH_SHORT).show();
-				} else {
-					callShare();
-				}
-			}
-		});
+	
 
 		btnOption.setOnClickListener(new OnClickListener() {
 
