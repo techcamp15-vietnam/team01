@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/time"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:textColor="#FF000B" />
+        android:textColor="#37FDFC" />
 
     <TextView
         android:id="@+id/textview_score"

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -47,6 +48,7 @@ public class SinglePlayActivity extends Activity {
 
 	private TextView scoreTV;
 	private TextView timerTV;
+	private TextView highscoreTV;
 	private Button startBT;
 
 	private ImageView timeUpImg;
@@ -92,6 +94,7 @@ public class SinglePlayActivity extends Activity {
 		tomatoFire = (ImageView) findViewById(R.id.tomato_fire);
 		scoreTV = (TextView) findViewById(R.id.textview_score);
 		timerTV = (TextView) findViewById(R.id.text_view_timer);
+		highscoreTV = (TextView) findViewById(R.id.text_view_highscore);
 		startBT = (Button) findViewById(R.id.btn_start);
 		timeUpImg = (ImageView) findViewById(R.id.timeup_img);
 
@@ -184,7 +187,6 @@ public class SinglePlayActivity extends Activity {
 
 						@Override
 						public void run() {
-							
 
 						}
 					});
@@ -251,12 +253,15 @@ public class SinglePlayActivity extends Activity {
 						countTimePlay -= 500;
 						final int displayNumber = (int) (countTimePlay / 1000);
 
+						
 						handler.post(new Runnable() {
 
 							@Override
 							public void run() {
+								if(displayNumber <= 5){
+									timerTV.setTextColor(Color.RED);
+								}
 								timerTV.setText("Time : " + displayNumber + "");
-
 							}
 						});
 
@@ -410,6 +415,8 @@ public class SinglePlayActivity extends Activity {
 		super.onPause();
 		// Because the Camera object is a shared resource, it's very
 		// important to release it when the activity is paused.
+		
+		pause();
 
 		if (mCamera != null) {
 			mPreview.setCamera(null);
