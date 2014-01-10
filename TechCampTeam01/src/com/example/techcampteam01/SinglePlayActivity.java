@@ -61,7 +61,7 @@ public class SinglePlayActivity extends Activity {
 	private TextView timerTV;
 	private TextView highscoreTV;
 
-	private static final int TIME_PLAY_IN_SECOND = 10000;
+	private static final int TIME_PLAY_IN_SECOND = 30000;
 
 	private Thread timeCounterThread;
 	private Handler handler;
