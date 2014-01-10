@@ -114,7 +114,7 @@ public class Tomato {
 		drawSplashTime = 3000;
 
 		splashPlusX = (int) (parent.getWidth() * 0.75);
-		splashPlusY = (int) (parent.getHeight() * 0.25);
+		splashPlusY = (int) (parent.getHeight() * 0.1);
 
 		delayTime = 10;
 
@@ -361,8 +361,8 @@ public class Tomato {
 			splashPlusX = splashPlusX - 2;
 			break;
 		case TOMATO:
-			splashPlusX = splashPlusX + 2;
-			splashPlusY = splashPlusY - 2;
+			splashPlusX = splashPlusX - 2;
+			splashPlusY = splashPlusY + 2;
 			break;
 		default:
 			break;

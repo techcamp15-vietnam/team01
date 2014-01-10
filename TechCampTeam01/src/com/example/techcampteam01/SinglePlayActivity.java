@@ -283,8 +283,7 @@ public class SinglePlayActivity extends Activity {
 			});
 
 		}
-		
-		
+
 	}
 
 	public GameState getGameState() {
@@ -304,8 +303,6 @@ public class SinglePlayActivity extends Activity {
 			@Override
 			public void onPictureTaken(byte[] data, Camera camera) {
 
-				// Toast.makeText(getBaseContext(), "Chup hinh",
-				// Toast.LENGTH_SHORT).show();
 				gotoResultScreen(data);
 			}
 		});
@@ -319,8 +316,7 @@ public class SinglePlayActivity extends Activity {
 	 */
 
 	private void gotoResultScreen(byte[] imageByte) {
-		
-		
+
 		Intent intent = new Intent(SinglePlayActivity.this, ResultScreen.class);
 		Bitmap image = BitmapFactory.decodeByteArray(imageByte, 0,
 				imageByte.length);
@@ -461,10 +457,11 @@ public class SinglePlayActivity extends Activity {
 		// TODO Auto-generated method stub
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			pause();
 
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-			finish();
+			// Intent intent = new Intent(this, MainActivity.class);
+			// startActivity(intent);
+			// finish();
 
 			return true;
 		}
@@ -521,8 +518,6 @@ public class SinglePlayActivity extends Activity {
 		if (id == 0) {
 
 			setGameState(GameState.PAUSE);
-			Toast.makeText(SinglePlayActivity.this, "Pause", Toast.LENGTH_SHORT)
-					.show();
 			final Dialog dialog = new Dialog(this);
 			LayoutInflater inflater = LayoutInflater
 					.from(SinglePlayActivity.this);
@@ -545,7 +540,7 @@ public class SinglePlayActivity extends Activity {
 					if (state == GameState.PAUSE) {
 
 						setGameState(GameState.PLAYING);
-						if (countTimePlay <= 5000){
+						if (countTimePlay <= 5000) {
 							AssetManager.playSound(AssetManager.timeOutSound);
 						}
 					}
