@@ -112,15 +112,14 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		
-		if(mCamera!=null)
-		{
+
+		if (mCamera != null) {
 			Camera.Parameters parameters = mCamera.getParameters();
 			requestLayout();
 			mCamera.setParameters(parameters);
 			mCamera.startPreview();
 			startDetection();
-			
+
 		}
 	}
 
@@ -313,11 +312,21 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback,
 	 */
 	private void drawTomato(Canvas canvas) {
 
-		for (Tomato flyingTomato : listTomatoOnScreen) {
+		if (listTomatoOnScreen.size() > 3)
+			listTomatoOnScreen.remove(0);
+
+		for (int i = 0; i < listTomatoOnScreen.size(); i++) {
+			
+			Tomato flyingTomato = listTomatoOnScreen.get(i);
 
 			if (flyingTomato != null)
 				flyingTomato.draw(canvas);
 		}
+
+		 for (Tomato flyingTomato : listTomatoOnScreen) {
+		
+		
+		 }
 
 		invalidate();
 

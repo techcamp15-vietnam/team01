@@ -49,6 +49,7 @@ public class ResultScreen extends Activity {
 
 		int score = getIntent().getIntExtra("score", 0);
 		if (score > getHighScore()) {
+			AssetManager.playSound(AssetManager.highscoreClapHand);
 			saveHighScore(score);
 			resultImage = creatHighScoreImage();
 		} else {

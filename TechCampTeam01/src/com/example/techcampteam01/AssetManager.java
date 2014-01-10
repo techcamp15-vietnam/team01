@@ -12,17 +12,19 @@ import android.media.MediaPlayer;
 public class AssetManager {
 
 	public static Bitmap rawbitmap;
-
 	public static Bitmap splashRaw;
 
 	public static Bitmap apple;
 	public static Bitmap egg;
 	public static Bitmap splash1;
 	public static Bitmap splash2;
+
 	public static MediaPlayer mainMenuSound;
 	public static MediaPlayer soundHit;
 	public static MediaPlayer timeOutSound;
 	public static MediaPlayer timerStopSound;
+	public static MediaPlayer highscoreClapHand;
+
 	MainActivity context;
 
 	public static Bitmap plusOne, plusThree, plusFive;
@@ -68,6 +70,8 @@ public class AssetManager {
 		soundHit = MediaPlayer.create(context, R.raw.sound_hit);
 		timeOutSound = MediaPlayer.create(context, R.raw.timer_out);
 		timerStopSound = MediaPlayer.create(context, R.raw.timer_stop);
+		highscoreClapHand = MediaPlayer.create(context,
+				R.raw.highscore_claps_hand);
 	}
 
 	/**

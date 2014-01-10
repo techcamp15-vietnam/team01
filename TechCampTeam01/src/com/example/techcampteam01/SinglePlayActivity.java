@@ -32,7 +32,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.techcampteam01.Tomato.FruitType;
 
@@ -61,7 +60,7 @@ public class SinglePlayActivity extends Activity {
 	private TextView timerTV;
 	private TextView highscoreTV;
 
-	private static final int TIME_PLAY_IN_SECOND = 30000;
+	private static final int TIME_PLAY_IN_SECOND = 20000;
 
 	private Thread timeCounterThread;
 	private Handler handler;
@@ -428,6 +427,9 @@ public class SinglePlayActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+				if (state == GameState.START)
+					break;
 			}
 
 			setGameState(GameState.STOP);
@@ -437,6 +439,7 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	/**
+	 * 
 	 * start Timer
 	 * 
 	 * @author ティエップ
@@ -557,6 +560,7 @@ public class SinglePlayActivity extends Activity {
 					Intent intent = new Intent(SinglePlayActivity.this,
 							SinglePlayActivity.class);
 					startActivity(intent);
+					// timeCounterThread.stop();
 					finish();
 				}
 			});

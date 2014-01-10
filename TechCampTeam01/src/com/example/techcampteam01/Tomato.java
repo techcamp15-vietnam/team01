@@ -389,7 +389,9 @@ public class Tomato {
 
 	private void removeFromListHolder() {
 		List<Tomato> listHolder = ((Preview) parent).getListHolder();
-		listHolder.remove(this);
+		if (listHolder.size() > 5) {
+			listHolder.remove(0);
+		}
 	}
 
 	class SleepThreadPlus extends Thread {
