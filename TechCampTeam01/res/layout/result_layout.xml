@@ -20,22 +20,24 @@
             android:src="@drawable/tomato" />
 
         <TextView
-            android:id="@+id/high_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/highscore"
-            android:textAppearance="@android:style/TextAppearance.Large" />
-
-        <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="@string/score"
+            android:textColor="@android:color/holo_purple"
             android:textAppearance="@android:style/TextAppearance.Large" />
+
+        <TextView
+            android:id="@+id/high_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/highscore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textAppearance="@android:style/TextAppearance.Small" />
 
         <RelativeLayout
             android:layout_width="300dp"
@@ -46,10 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="100dp"
-                android:src="@drawable/buttonshare"
-                 />
+                android:layout_marginTop="10dp"
+                android:src="@drawable/buttonshare" />
 
             <ImageView
                 android:id="@+id/btn_retry"
@@ -57,18 +58,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/buttonretry"
-                 />
+                android:src="@drawable/buttonretry" />
 
             <ImageView
                 android:id="@+id/btn_mainmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="110dp"
                 android:layout_marginLeft="80dp"
-                android:src="@drawable/buttonclose"
-                />
+                android:layout_marginTop="110dp"
+                android:src="@drawable/buttonclose" />
         </RelativeLayout>
     </LinearLayout>
 
