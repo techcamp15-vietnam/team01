@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -317,8 +318,10 @@ public class SinglePlayActivity extends Activity {
 	private void gotoResultScreen(byte[] imageByte) {
 
 		Intent intent = new Intent(SinglePlayActivity.this, ResultScreen.class);
+		Options options = new Options();
+		options.inSampleSize = 6;
 		Bitmap image = BitmapFactory.decodeByteArray(imageByte, 0,
-				imageByte.length);
+				imageByte.length,options);
 		image = makeResultBitmap(image, AssetManager.splashRaw);
 		image = Bitmap.createScaledBitmap(image, 250, 250, true);
 
